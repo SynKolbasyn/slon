@@ -1,12 +1,23 @@
+#include <iostream>
+#include <string>
+#include <vector>
 #include <sstream>
 
-#include "ros/ros.h"
-#include "std_msgs/String.h"
+#include <ros/ros.h>
+#include <std_msgs/Int32.h>
+#include <std_msgs/Int32MultiArray.h>
+
+#include <opencv2/opencv.hpp>
 
 
+using std::cerr;
+using std::endl;
+using std::string;
+using std::vector;
 using std::stringstream;
 
-using std_msgs::String;
+using std_msgs::Int32;
+using std_msgs::Int32MultiArray;
 
 using ros::ok;
 using ros::init;
@@ -15,30 +26,69 @@ using ros::spinOnce;
 using ros::Publisher;
 using ros::NodeHandle;
 
+using cv::CAP_ANY;
+using cv::CAP_PROP_FRAME_WIDTH;
+using cv::CAP_PROP_FRAME_HEIGHT;
+using cv::Mat;
+using cv::Point;
+using cv::imshow;
+using cv::Scalar;
+using cv::waitKey;
+using cv::polylines;
+using cv::VideoCapture;
+using cv::QRCodeDetector;
+using cv::destroyAllWindows;
+
 
 int main(int argc, char** argv) {
     init(argc, argv, "MAIN");
     NodeHandle n;
-    Publisher chatter_pub = n.advertise<std_msgs::String>("main", 1000);
+    Publisher chatter_pub = n.advertise<Int32MultiArray>("main", 1000);
 
-    Rate loop_rate(10);
+    VideoCapture video(0, CAP_ANY);
+	
+	if (!video.isOpened()) {
+		cerr << "ERROR: Can't open video" << endl;
+		video.release();
+		return -1;
+	}
+	
+	video.set(CAP_PROP_FRAME_WIDTH, 640);
+	video.set(CAP_PROP_FRAME_HEIGHT, 480);
+	
+	Mat frame;
+	
+	QRCodeDetector qcd;
+	vector<Point> points;
+	Scalar color(0, 0, 255);
 
-    int count = 0;
-    while (ok()) {
-        String msg;
+    Int32MultiArray arr;
+	
+	while (ok()) {
+		if (!video.read(frame)) {
+			cerr << "ERROR: Can't read frame" << endl;
+			video.release();
+			destroyAllWindows();
+			return -1;
+		}
 
-        stringstream ss;
-        ss << "hello world " << count;
-        msg.data = ss.str();
+		if (qcd.detect(frame, points)) {
+			polylines(frame, points, true, color, 5);
+            arr.data.push_back(points[0].x);
+            arr.data.push_back(points[1].x);
+            chatter_pub.publish(arr);
+			ROS_INFO("[%i, %i]", arr.data[0], arr.data[1]);
+            arr.data.clear();
+			points.clear();
+		}
+		
+		imshow("OpenCV Test", frame);
 
-        ROS_INFO("%s", msg.data.c_str());
-        chatter_pub.publish(msg);
-
-        spinOnce();
-
-        loop_rate.sleep();
-        ++count;
-    }
+		if (waitKey(1) == 113) break;
+	}
+	
+	video.release();
+	destroyAllWindows();
 
     return 0;
 }
