@@ -6,7 +6,13 @@
 
 ros::NodeHandle  nh;
 
-bool led_state = false;
+void ros_control(void* pvParameters) {
+  while (true) {
+    nh.spinOnce();
+    vTaskDelay(100);
+    digitalWrite(18, LOW);
+  }
+}
 
 void message_cb(const std_msgs::Int32MultiArray& arr) {
   digitalWrite(18, HIGH);
@@ -19,10 +25,9 @@ void setup() {
   nh.initNode();
   nh.subscribe(sub);
   pinMode(18, OUTPUT);
+  xTaskCreate(ros_control, "ros_control", 2048, NULL, 1, NULL);
 }
 
 void loop() {
-  nh.spinOnce();
-  delay(100);
-  digitalWrite(18, LOW);
+  
 }
