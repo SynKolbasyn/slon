@@ -64,6 +64,8 @@ int main(int argc, char** argv) {
 
     Int32MultiArray arr;
 	
+	Rate loop_rate(100);
+	
 	while (ok()) {
 		if (!video.read(frame)) {
 			cerr << "ERROR: Can't read frame" << endl;
@@ -85,6 +87,9 @@ int main(int argc, char** argv) {
 		imshow("OpenCV Test", frame);
 
 		if (waitKey(1) == 113) break;
+
+		spinOnce();
+		loop_rate.sleep();
 	}
 	
 	video.release();
