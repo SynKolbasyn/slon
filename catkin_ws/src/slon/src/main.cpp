@@ -87,7 +87,7 @@ int main(int argc, char** argv) {
 		imshow("OpenCV Test", frame);
 
 		if (waitKey(1) == 113) break;
-
+		
 		spinOnce();
 		loop_rate.sleep();
 	}

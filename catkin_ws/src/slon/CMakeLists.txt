@@ -28,3 +28,7 @@ include_directories(
 add_executable(${PROJECT_NAME}_main_node src/main.cpp)
 target_link_libraries(${PROJECT_NAME}_main_node ${catkin_LIBRARIES} ${OpenCV_LIBS})
 add_dependencies(${PROJECT_NAME}_main_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
+add_executable(${PROJECT_NAME}_test_node test/main.cpp)
+target_link_libraries(${PROJECT_NAME}_test_node ${catkin_LIBRARIES} ${OpenCV_LIBS})
+add_dependencies(${PROJECT_NAME}_test_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
