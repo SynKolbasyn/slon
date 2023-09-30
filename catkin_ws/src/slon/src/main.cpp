@@ -9,6 +9,13 @@
 
 #include <opencv2/opencv.hpp>
 
+#include <boost/algorithm/minmax_element.hpp>
+#include <array>
+#include <utility>
+
+
+typedef std::array<int, 4> array;
+
 
 using std::cerr;
 using std::endl;
@@ -74,15 +81,18 @@ int main(int argc, char** argv) {
 			return -1;
 		}
 
-		if (qcd.detect(frame, points)) {
+		qcd.detect(frame, points);
+		if (points.size() == 4) {
 			polylines(frame, points, true, color, 5);
-            arr.data.push_back(points[0].x);
-            arr.data.push_back(points[1].x);
+			array a{{points[0].x, points[1].x, points[2].x, points[3].x}};
+			std::pair<array::iterator, array::iterator> p = boost::minmax_element(a.begin(), a.end());
+            arr.data.push_back(*p.first);
+            arr.data.push_back(*p.second);
             chatter_pub.publish(arr);
 			ROS_INFO("[%i, %i]", arr.data[0], arr.data[1]);
             arr.data.clear();
-			points.clear();
 		}
+		points.clear();
 		
 		imshow("OpenCV Test", frame);
 

@@ -1,91 +1,18 @@
-#include <Arduino.h>
-
-#include <ros.h>
-#include <std_msgs/Int32.h>
-#include <std_msgs/Int32MultiArray.h>
-
-#include "proc.h"
-
-
-ros::NodeHandle  nh;
-
-float pos = 0;
-
-
-void ros_control(void* pvParameters);
-
-void robot_control(void* pvParameters);
-
-void message_cb(const std_msgs::Int32MultiArray& arr);
-
-
-ros::Subscriber<std_msgs::Int32MultiArray> sub("main", &message_cb);
-
-
-void setup() {
-  nh.getHardware()->setBaud(115200);
-  nh.initNode();
-  nh.subscribe(sub);
-  pinMode(16, OUTPUT);
-  motor_setup();
-  xTaskCreate(ros_control, "ros_control", 2048, NULL, 1, NULL);
-  xTaskCreate(robot_control, "robot_control", 2048, NULL, 2, NULL);
-}
-
-void loop() {
-  
-}
-
-
-void message_cb(const std_msgs::Int32MultiArray& arr) {
-  pos = (arr.data[0] + arr.data[1]) / 2.0;
-  digitalWrite(16, HIGH);
-}
-
-
-void ros_control(void* pvParameters) {
-  while (true) {
-    nh.spinOnce();
-    vTaskDelay(100);
-    digitalWrite(16, LOW);
-    pos = 0;
-  }
-}
-
-
-void robot_control(void* pvParameters) {
-  while (true) {
-    if (pos == 0) {
-      robot_stop();
-      continue;
-    }
-    if (pos > 340) robot_right(20);
-    if (pos < 300) robot_left(20);
-  }
-}
-/*
-
 #include <TinyGPSPlus.h>
 #include <SoftwareSerial.h>
 /*
    This sample code demonstrates the normal use of a TinyGPSPlus (TinyGPSPlus) object.
    It requires the use of SoftwareSerial, and assumes that you have a
    4800-baud serial GPS device hooked up on pins 4(rx) and 3(tx).
-*//*
-static const int RXPin = 16, TXPin = 17;
-static const uint32_t GPSBaud = 9600;
+*/
+static const int RXPin = 4, TXPin = 3;
+static const uint32_t GPSBaud = 4800;
 
 // The TinyGPSPlus object
 TinyGPSPlus gps;
 
 // The serial connection to the GPS device
 SoftwareSerial ss(RXPin, TXPin);
-
-static void printInt(unsigned long val, bool valid, int len);
-static void printStr(const char *str, int len);
-static void smartDelay(unsigned long ms);
-static void printFloat(float val, bool valid, int len, int prec);
-static void printDateTime(TinyGPSDate &d, TinyGPSTime &t);
 
 void setup()
 {
@@ -230,4 +157,3 @@ static void printStr(const char *str, int len)
     Serial.print(i<slen ? str[i] : ' ');
   smartDelay(0);
 }
-*/
