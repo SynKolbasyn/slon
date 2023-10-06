@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Slon</string>
+    <string name="button_save">Save</string>
+    <string name="button_select">Select</string>
+</resources>
