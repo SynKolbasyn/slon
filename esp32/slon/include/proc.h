@@ -3,6 +3,12 @@
 #include <Wire.h>
 
 
+#pragma once
+
+#ifndef _PROC_H_
+#define _PROC_H_
+
+
 void send_command(int id, int command) {
   Wire.beginTransmission(id);
   Wire.write(command);
@@ -74,3 +80,6 @@ void robot_right(int speed) {
 void robot_stop() {
   go(0, 0);
 }
+
+
+#endif
