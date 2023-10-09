@@ -2,4 +2,5 @@
     <string name="app_name">Slon</string>
     <string name="button_save">Save</string>
     <string name="button_select">Select</string>
+    <string name="title_activity_gpsactivity">GPSActivity</string>
 </resources>

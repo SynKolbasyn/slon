@@ -33,17 +33,19 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat.startActivity
 import com.synkolbasyn.slon.ui.theme.SlonTheme
 
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+//
         val requestPermissionLauncher = registerForActivityResult(
             ActivityResultContracts.RequestPermission()
         ) { isGranted: Boolean ->
@@ -53,7 +55,7 @@ class MainActivity : ComponentActivity() {
         if (
             ActivityCompat.checkSelfPermission(
                 this,
-                Manifest.permission.BLUETOOTH_CONNECT
+                Manifest.permission.BLUETOOTH
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             requestPermissionLauncher.launch(Manifest.permission.BLUETOOTH)
@@ -71,7 +73,7 @@ class MainActivity : ComponentActivity() {
             val startForResult = registerForActivityResult(
                 ActivityResultContracts.StartActivityForResult()
             ) { result: ActivityResult ->
-                if (result.resultCode != Activity.RESULT_OK) { this.finish() }
+                if (result.resultCode == Activity.RESULT_OK) { this.finish() }
                 recreate()
             }
             startForResult.launch(enableBtIntent)
@@ -104,11 +106,6 @@ fun SlonApp(devicesList: List<BluetoothDevice>) {
             .wrapContentSize(Alignment.Center),
         devicesList = devicesList
     )
-//    GPSActivity(
-//        modifier = Modifier
-//            .fillMaxSize()
-//            .wrapContentSize(Alignment.Center)
-//    )
 }
 
 
@@ -128,8 +125,12 @@ fun ConnectActivity(modifier: Modifier, devicesList: List<BluetoothDevice>) {
 
 @Composable
 fun DeviceCard(deviceName: String, deviceAddr: String, modifier: Modifier = Modifier) {
+    val context = LocalContext.current
     Card(modifier = modifier.fillMaxWidth().clickable {
         Log.d("LOG_TAG", "Name: $deviceName | Addr: $deviceAddr")
+        val intent: Intent = Intent(context, GPSActivity::class.java)
+        intent.putExtra("mac", deviceAddr)
+        context.startActivity(intent)
     }) {
         Column {
             Text(
@@ -144,30 +145,6 @@ fun DeviceCard(deviceName: String, deviceAddr: String, modifier: Modifier = Modi
                 style = MaterialTheme.typography.headlineSmall,
                 fontSize = 20.sp
             )
-        }
-    }
-}
-
-
-@Composable
-fun GPSActivity(modifier: Modifier) {
-    var latitude: Double = 0.0
-    var longitude: Double = 0.0
-
-    Column (
-        modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(text = "Latitude: $latitude")
-            Spacer(modifier = Modifier.width(10.dp))
-            Text(text = "Longitude: $longitude")
-        }
-        Spacer(modifier = Modifier.height(500.dp))
-        Button(onClick = { /*TODO*/ }) {
-            Text(text = stringResource(id = R.string.button_save))
         }
     }
 }

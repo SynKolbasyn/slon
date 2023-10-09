@@ -1,5 +1,7 @@
 #include <Arduino.h>
 
+#include <string>
+
 #include <ros.h>
 #include <std_msgs/Int32.h>
 #include <std_msgs/Int32MultiArray.h>
@@ -7,19 +9,14 @@
 #include "proc.h"
 #include "gps.h"
 #include "structs.h"
-
-
-static const int RXPin = 16, TXPin = 17;
-static const uint32_t GPSBaud = 9600;
-
-TinyGPSPlus gps;
-
-SoftwareSerial ss(RXPin, TXPin);
+#include "proc_bt.h"
 
 
 ros::NodeHandle  nh;
 
 float pos = 0;
+
+coordinates cords = {.cords = std::vector<pair<double, double>> {}, .pos = 0};
 
 
 void ros_control(void* pvParameters);
@@ -28,6 +25,10 @@ void robot_control(void* pvParameters);
 
 void gps_control(void* pvParameters);
 
+void bt_send_control(void* pvParameters);
+
+void bt_recv_control(void* pvParameters);
+
 void message_cb(const std_msgs::Int32MultiArray& arr);
 
 
@@ -35,15 +36,19 @@ ros::Subscriber<std_msgs::Int32MultiArray> sub("main", &message_cb);
 
 
 void setup() {
+  Serial.begin(115200);
   nh.getHardware()->setBaud(115200);
   nh.initNode();
   nh.subscribe(sub);
   pinMode(16, OUTPUT);
   motor_setup();
-  ss.begin(GPSBaud);
+  setup_bt();
+  setup_gps();
   xTaskCreate(ros_control, "ros_control", 2048, NULL, 1, NULL);
   xTaskCreate(robot_control, "robot_control", 2048, NULL, 2, NULL);
   xTaskCreate(gps_control, "gps_control", 2048, NULL, 2, NULL);
+  xTaskCreate(bt_send_control, "bt_send_control", 4096, NULL, 2, NULL);
+  xTaskCreate(bt_recv_control, "bt_recv_control", 2048, NULL, 2, NULL);
 }
 
 void loop() {
@@ -80,11 +85,30 @@ void robot_control(void* pvParameters) {
 
 
 void gps_control(void* pvParameters) {
-  pair<double, double> p1 = {.f = 1.23, .s = 2.34};
-  pair<double, double> p2 = {.f = 1.23, .s = 2.34};
-  std::vector<pair<double, double>> a = {p1, p2};
-  coordinates c = {.cords = a, .pos = 0};
   while (true) {
-    gps_process(gps, c);
+    gps_process(cords);
+  }
+}
+
+
+void bt_send_control(void* pvParameters) {
+  while (true) {
+    std::string d(std::to_string((double)random() / random()) + ";" + std::to_string((double)random() / random()));
+    send_bt(d);
+    Serial.println(d.c_str());
+    vTaskDelay(1000);
+  }
+}
+
+
+void bt_recv_control(void* pvParameters) {
+  while (true) {
+    std::string d;
+    recv_bt(d);
+    if (d.size() != 0) Serial.println(d.c_str());
+    if (d.compare("Save") == 0) {
+      cords.cords.push_back(pair<double, double> {.f = (double)random() / random(), .s = (double)random() / random()});
+      // cords.cords.push_back(pair<double, double> {.f = gps.location.lat(), .s = gps.location.lng()});
+    }
   }
 }

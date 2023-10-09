@@ -1,19 +1,21 @@
-#include <Arduino.h>
-
-#include <Wire.h>
-
-
 #pragma once
 
 #ifndef _PROC_H_
 #define _PROC_H_
 
 
+#include <Arduino.h>
+
+#include <Wire.h>
+
+#include "types.h"
+
+
 void send_command(int id, int command) {
   Wire.beginTransmission(id);
   Wire.write(command);
   Wire.endTransmission();
-  delay(15);
+  vTaskDelay(15);
 }
 
 
@@ -25,7 +27,7 @@ void send_command_four_byte(int id, int command, int byte1, int byte2, int byte3
   Wire.write(byte3);
   Wire.write(byte4);
   Wire.endTransmission();
-  delay(15);
+  vTaskDelay(15);
 }
 
 void set_motor_speeds(int address, int mSpeed1, int mSpeed2) {
@@ -50,20 +52,9 @@ void go(int lSpeed, int rSpeed) {
 void motor_setup() {
   Wire.begin(21, 22);
   
-  send_command(1, 0x27);
-  send_command(2, 0x27);
-  send_command(3, 0x27);
-  send_command(4, 0x27);
-  
-  send_command(1, 0x25);
-  send_command(2, 0x25);
-  send_command(3, 0x25);
-  send_command(4, 0x25);
-
-  send_command(1, 0x4E);
-  send_command(2, 0x4E);
-  send_command(3, 0x4E);
-  send_command(4, 0x4E);
+  for (i16 i = 1; i < 5; ++i) send_command(i, 0x27);
+  for (i16 i = 1; i < 5; ++i) send_command(i, 0x25);
+  for (i16 i = 1; i < 5; ++i) send_command(i, 0x4E);
 }
 
 

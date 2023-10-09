@@ -1,11 +1,11 @@
-#include <vector>
-
-#include "types.h"
-
 #pragma once
 
 #ifndef _STRUCTS_H_
 #define _STRUCTS_H_
+
+#include <vector>
+
+#include "types.h"
 
 
 template<typename T1, typename T2> struct pair {
@@ -16,7 +16,7 @@ template<typename T1, typename T2> struct pair {
 
 struct coordinates {
     std::vector<pair<double, double>> cords;
-    u64 pos;
+    i64 pos;
 
     bool set_next_pos() {
         if (++pos >= cords.size()) {
