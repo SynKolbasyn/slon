@@ -10,6 +10,7 @@
 #include "gps.h"
 #include "structs.h"
 #include "proc_bt.h"
+#include "compass.h"
 
 
 ros::NodeHandle  nh;
@@ -29,6 +30,8 @@ void bt_send_control(void* pvParameters);
 
 void bt_recv_control(void* pvParameters);
 
+void compass_control(void* pvParametrs);
+
 void message_cb(const std_msgs::Int32MultiArray& arr);
 
 
@@ -44,11 +47,13 @@ void setup() {
   motor_setup();
   setup_bt();
   setup_gps();
+  setup_compass();
   xTaskCreate(ros_control, "ros_control", 2048, NULL, 1, NULL);
   xTaskCreate(robot_control, "robot_control", 2048, NULL, 2, NULL);
   xTaskCreate(gps_control, "gps_control", 2048, NULL, 2, NULL);
   xTaskCreate(bt_send_control, "bt_send_control", 4096, NULL, 2, NULL);
   xTaskCreate(bt_recv_control, "bt_recv_control", 2048, NULL, 2, NULL);
+  xTaskCreate(compass_control, "compass_control", 2048, NULL, 2, NULL);
 }
 
 void loop() {
@@ -110,5 +115,13 @@ void bt_recv_control(void* pvParameters) {
       cords.cords.push_back(pair<double, double> {.f = (double)random() / random(), .s = (double)random() / random()});
       // cords.cords.push_back(pair<double, double> {.f = gps.location.lat(), .s = gps.location.lng()});
     }
+  }
+}
+
+
+void compass_control(void* pvParametrs) {
+  while(true) {
+    process_compass();
+    vTaskDelay(10);
   }
 }
