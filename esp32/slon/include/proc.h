@@ -9,6 +9,17 @@
 #include <Wire.h>
 
 #include "types.h"
+#include "structs.h"
+
+
+enum Robot_state {
+  Rest,
+  Phone_controle,
+  Work
+};
+
+
+Robot_state robot_state = Robot_state::Rest;
 
 
 void send_command(int id, int command) {
@@ -70,6 +81,26 @@ void robot_right(int speed) {
 
 void robot_stop() {
   go(0, 0);
+}
+
+
+void robot_rest() {
+  go(0, 0);
+}
+
+
+void robot_phone_controle() {
+
+}
+
+
+void robot_work(coordinates& cords, float pos) {
+  if (pos == 0) {
+      robot_stop();
+      return;
+  }
+  if (pos > 340) robot_right(20);
+  if (pos < 300) robot_left(20);
 }
 
 

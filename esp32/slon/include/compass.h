@@ -6,21 +6,10 @@
 
 #include <Wire.h>
 
-#include <HMC5883L.h>
+#include <DFRobot_QMC5883.h>
 
 
-HMC5883L compass;
-
-
-int minX = 0;
-int maxX = 0;
-int minY = 0;
-int maxY = 0;
-int minZ = 0;
-int maxZ = 0;
-int offZ = 0;
-int offX = 0;
-int offY = 0;
+DFRobot_QMC5883 compass(&Wire, /*I2C addr*/0x0D);
 
 
 void calibrate();
@@ -29,78 +18,34 @@ void calibrate();
 void setup_compass() {
   Serial.begin(115200);
 
-  // Initialize Initialize HMC5883L
   while (!compass.begin()) {
-    Serial.println("Compass setup failed...");
+    Serial.println("Could not find a valid 5883 sensor, check wiring!");
     vTaskDelay(500);
   }
-
-  // Set measurement range
-  compass.setRange(HMC5883L_RANGE_1_3GA);
-
-  // Set measurement mode
-  compass.setMeasurementMode(HMC5883L_CONTINOUS);
-
-  // Set data rate
-  compass.setDataRate(HMC5883L_DATARATE_30HZ);
-
-  // Set number of samples averaged
-  compass.setSamples(HMC5883L_SAMPLES_8);
-
-  compass.setOffset(227, 267, -375);
 }
 
 void process_compass() {
-  // calibrate();
-  Vector mag = compass.readRaw();
-  Serial.printf("X: %f | Y: %f | Z: %f\n", mag.XAxis, mag.YAxis, mag.ZAxis);
+  float declinationAngle = (10.0 + (91.0 / 60.0)) / (180 / PI);
+  compass.setDeclinationAngle(declinationAngle);
+  sVector_t mag = compass.readRaw();
+  compass.getHeadingDegrees();
+  Serial.print("X:");
+  Serial.print(mag.XAxis);
+  Serial.print(" Y:");
+  Serial.print(mag.YAxis);
+  Serial.print(" Z:");
+  Serial.println(mag.ZAxis);
+  Serial.print("Degress = ");
+  Serial.println(mag.HeadingDegress);
+  delay(100);
 }
 
 
 void calibrate() {
-  Vector mag = compass.readRaw();
-
-  // Determine Min / Max values
-  if (mag.XAxis < minX) minX = mag.XAxis;
-  if (mag.XAxis > maxX) maxX = mag.XAxis;
-  if (mag.YAxis < minY) minY = mag.YAxis;
-  if (mag.YAxis > maxY) maxY = mag.YAxis;
-  if (mag.ZAxis < minZ) minZ = mag.ZAxis;
-  if (mag.ZAxis > maxZ) maxZ = mag.ZAxis;
-
-  // Calculate offsets
-  offX = (maxX + minX)/2;
-  offY = (maxY + minY)/2;
-  offZ = (maxZ + minZ)/2;
-
-  Serial.print(mag.XAxis);
-  Serial.print(":");
-  Serial.print(mag.YAxis);
-  Serial.print(":");
-  Serial.print(minX);
-  Serial.print(":");
-  Serial.print(maxX);
-  Serial.print(":");
-  Serial.print(minY);
-  Serial.print(":");
-  Serial.print(maxY);
-  Serial.print(":");
-  Serial.print(minZ);
-  Serial.print(":");
-  Serial.print(maxZ);
-  Serial.print(":");
-  Serial.print(offX);
-  Serial.print(":");
-  Serial.print(offY);
-  Serial.print(":");
-  Serial.print(offZ);
-  Serial.print("\n");
-
-  // compass.setOffset(offX, offY, offZ);
 }
 
-
 /*
+
 
 #include <Wire.h>
 
@@ -131,7 +76,8 @@ void process_compass() {
   Serial.print ("Found ");      
   Serial.print (count, DEC);        // numbers of devices
   Serial.println (" device(s).");
+  vTaskDelay(500);
 }
-
 */
+
 #endif

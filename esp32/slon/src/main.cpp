@@ -79,12 +79,19 @@ void ros_control(void* pvParameters) {
 
 void robot_control(void* pvParameters) {
   while (true) {
-    if (pos == 0) {
-      robot_stop();
-      continue;
+    switch (robot_state) {
+    case Robot_state::Rest:
+      robot_rest();
+      break;
+    
+    case Robot_state::Phone_controle:
+      robot_phone_controle();
+      break;
+    
+    case Robot_state::Work:
+      robot_work(cords, pos);
+      break;
     }
-    if (pos > 340) robot_right(20);
-    if (pos < 300) robot_left(20);
   }
 }
 
@@ -114,6 +121,9 @@ void bt_recv_control(void* pvParameters) {
     if (d.compare("Save") == 0) {
       cords.cords.push_back(pair<double, double> {.f = (double)random() / random(), .s = (double)random() / random()});
       // cords.cords.push_back(pair<double, double> {.f = gps.location.lat(), .s = gps.location.lng()});
+    }
+    if (d.compare("Start") == 0) {
+
     }
   }
 }
