@@ -19,7 +19,6 @@
 
 using std::array;
 
-// using ros::NodeHandle;
 using ros::Publisher;
 
 
@@ -29,7 +28,6 @@ namespace gps {
 
 slon::gps gps_data;
 
-// NodeHandle nh;
 Publisher pub("gps_data", &gps_data);
 
 
@@ -51,9 +49,6 @@ void main_gps(void* pvParameters) {
 
 
 void setup_gps() {
-  // SemaphoreHandle_t mutex = (SemaphoreHandle_t) pvParameters;
-  // nh.getHardware()->setBaud(115200);
-  // nh.initNode();
   xSemaphoreTake(mutex, portMAX_DELAY);
   nh.advertise(pub);
   xSemaphoreGive(mutex);
@@ -77,22 +72,6 @@ void loop_gps() {
     gps_data.state = false;
     gps_data.latitude = 0.0;
     gps_data.longitude = 0.0;
-
-    // if (coordinates.count() != 0) {
-    //   f64 dist_to_next = TinyGPSPlus::distanceBetween(
-    //     gps.location.lat(),
-    //     gps.location.lng(),
-    //     coordinates.cords[coordinates.pos].first,
-    //     coordinates.cords[coordinates.pos].second
-    //   );
-
-      // f64 course_to_next = TinyGPSPlus::courseTo(
-      //   gps.location.lat(),
-      //   gps.location.lng(),
-      //   coordinates.cords[coordinates.pos].first,
-      //   coordinates.cords[coordinates.pos].second
-      // );
-    // }
 
     // if (valid) Serial.printf("lat: %d | lon: %d\n", gps.location.lat(), gps.location.lng());
     while (Serial2.available()) gps.encode(Serial2.read());

@@ -19,7 +19,6 @@
 using std::string;
 using std::pair;
 
-// using ros::NodeHandle;
 using ros::Subscriber;
 using ros::Publisher;
 
@@ -38,13 +37,11 @@ pair<string, i32> parse_bt(string& data);
 BluetoothSerial bt;
 
 slon::bt bluetooth_data;
-// NodeHandle nh;
 Subscriber<std_msgs::String> sub("send_by_bluetooth", message_process);
 Publisher pub("recieve_by_bluetooth", &bluetooth_data);
 
 
 void main_bluetooth(void* pvParameters) {
-  // SemaphoreHandle_t mutex = (SemaphoreHandle_t) pvParameters;
   setup_bluetooth();
   loop_bluetooth();
 }
@@ -53,8 +50,6 @@ void main_bluetooth(void* pvParameters) {
 void setup_bluetooth() {
   bt.begin("ESP32");
 
-  // nh.getHardware()->setBaud(115200);
-  // nh.initNode();
   xSemaphoreTake(mutex, portMAX_DELAY);
   nh.advertise(pub);
   nh.subscribe(sub);

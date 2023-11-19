@@ -9,8 +9,9 @@
 #include <ros.h>
 #include <std_msgs/Float32.h>
 
+#include <TroykaIMU.h>
 
-// using ros::NodeHandle;
+
 using ros::Publisher;
 
 
@@ -20,27 +21,68 @@ namespace compass {
 
 std_msgs::Float32 compass_data;
 
-// NodeHandle nh;
 Publisher pub("compass_data", &compass_data);
+
+Madgwick filter;
+Gyroscope gyroscope;
+Accelerometer accelerometer;
+Compass compass;
+
+float gx, gy, gz, ax, ay, az, mx, my, mz;
+float yaw, pitch, roll;
+float sampleRate = 100;
+
+// http://wiki.amperka.ru/articles:troyka-magnetometer-compass-calibrate 
+const float compassCalibrationBias[3] = { 567.893, -825.35, 1061.436 };
+const float compassCalibrationMatrix[3][3] = {
+  {1.909, 0.082, 0.004},
+  {0.049, 1.942, -0.235},
+  {-0.003, 0.008, 1.944}
+};
 
 
 void main_compass(void* pvParameters) {
-  // SemaphoreHandle_t mutex = (SemaphoreHandle_t) pvParameters;
-  // nh.getHardware()->setBaud(115200);
-  // nh.initNode();
   xSemaphoreTake(mutex, portMAX_DELAY);
   nh.advertise(pub);
   xSemaphoreGive(mutex);
 
+  gyroscope.begin();
+  accelerometer.begin();
+  compass.begin();
+  filter.begin();
+  compass.setCalibrateMatrix(compassCalibrationMatrix, compassCalibrationBias);
+
 
   while (true) {
-    float angle = 0.0;
+    unsigned long startMillis = millis();
+    accelerometer.readAccelerationGXYZ(ax, ay, az);
+    gyroscope.readRotationRadXYZ(gx, gy, gz);
+    compass.readCalibrateMagneticGaussXYZ(mx, my, mz);
+    filter.setFrequency(sampleRate);
+    filter.update(gx, gy, gz, ax, ay, az, mx, my, mz);
+    yaw = filter.getYawDeg();
+    pitch = filter.getPitchDeg();
+    roll = filter.getRollDeg();
+    
+    // Serial.print("yaw: ");
+    // Serial.print(yaw);
+    // Serial.print("\t\t");
+    // Serial.print("pitch: ");
+    // Serial.print(pitch);
+    // Serial.print("\t\t");
+    // Serial.print("roll: ");
+    // Serial.println(roll);
+    
+    float angle = yaw;
     compass_data.data = angle;
     xSemaphoreTake(mutex, portMAX_DELAY);
     pub.publish(&compass_data);
     nh.spinOnce();
     xSemaphoreGive(mutex);
     vTaskDelay(100);
+
+    unsigned long deltaMillis = millis() - startMillis;
+    sampleRate = 1000 / deltaMillis;
   }
 }
 

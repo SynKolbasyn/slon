@@ -17,7 +17,6 @@ namespace sk {
 namespace motors {
 
 
-// using ros::NodeHandle;
 using ros::Subscriber;
 
 
@@ -30,20 +29,16 @@ void send_command_four_byte(int id, int command, int byte1, int byte2, int byte3
 void send_command(int id, int command);
 
 
-// NodeHandle nh;
 Subscriber<slon::motors> sub("motors_control", motors_process);
 
 
 void main_motors(void* pvParameters) {
-  // SemaphoreHandle_t mutex = (SemaphoreHandle_t) pvParameters;
   setup_motors();
   loop_motors();
 }
 
 
 void setup_motors() {
-  // nh.getHardware()->setBaud(115200);
-  // nh.initNode();
   xSemaphoreTake(mutex, portMAX_DELAY);
   nh.subscribe(sub);
   xSemaphoreGive(mutex);
