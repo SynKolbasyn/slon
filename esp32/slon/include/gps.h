@@ -4,76 +4,118 @@
 #define _GPS_H_
 
 
+#include <array>
+
 #include <Arduino.h>
 
-#include <vector>
+#include <ros.h>
+#include <slon/gps.h>
 
 #include <TinyGPSPlus.h>
 
+#include "types.h"
 #include "structs.h"
 
 
-#define ERROR_WITH_MODULE 0
-#define HAVE_NOT_LOCATION 1
-#define HAVE_LOCATION 2
+using std::array;
+
+// using ros::NodeHandle;
+using ros::Publisher;
 
 
-TinyGPSPlus gps;
+namespace sk {
+namespace gps {
+
+
+slon::gps gps_data;
+
+// NodeHandle nh;
+Publisher pub("gps_data", &gps_data);
+
+
+enum GPS_status {
+  ERROR_WITH_MODULE,
+  HAVE_NOT_LOCATION,
+  HAVE_LOCATION
+};
+
+
+void setup_gps();
+void loop_gps();
+
+
+void main_gps(void* pvParameters) {
+  setup_gps();
+  loop_gps();
+}
 
 
 void setup_gps() {
+  // SemaphoreHandle_t mutex = (SemaphoreHandle_t) pvParameters;
+  // nh.getHardware()->setBaud(115200);
+  // nh.initNode();
+  xSemaphoreTake(mutex, portMAX_DELAY);
+  nh.advertise(pub);
+  xSemaphoreGive(mutex);
+
   Serial2.begin(9600);
 }
 
 
-void set_status(i16 status) {
-  switch (status) {
-  case ERROR_WITH_MODULE:
-    /* TODO: Set led to red */
-    Serial.println("ERROR_WITH_MODULE");
-    break;
+void loop_gps() {
+  TinyGPSPlus gps;
 
-  case HAVE_NOT_LOCATION:
-    /* TODO: Set led to yellow */
-    Serial.println("HAVE_NOT_LOCATION");
-    break;
+  GPS_status status = GPS_status::HAVE_NOT_LOCATION;
+  Coordinates coordinates;
 
-  case HAVE_LOCATION:
-    /* TODO: Set led to green */
-    Serial.println("HAVE_LOCATION");
-    break;
+  while (true) {
+    bool valid = gps.location.isValid();
+    
+    if (valid) status = GPS_status::HAVE_LOCATION;
+    else status = GPS_status::HAVE_NOT_LOCATION;
+
+    gps_data.state = false;
+    gps_data.latitude = 0.0;
+    gps_data.longitude = 0.0;
+
+    // if (coordinates.count() != 0) {
+    //   f64 dist_to_next = TinyGPSPlus::distanceBetween(
+    //     gps.location.lat(),
+    //     gps.location.lng(),
+    //     coordinates.cords[coordinates.pos].first,
+    //     coordinates.cords[coordinates.pos].second
+    //   );
+
+      // f64 course_to_next = TinyGPSPlus::courseTo(
+      //   gps.location.lat(),
+      //   gps.location.lng(),
+      //   coordinates.cords[coordinates.pos].first,
+      //   coordinates.cords[coordinates.pos].second
+      // );
+    // }
+
+    // if (valid) Serial.printf("lat: %d | lon: %d\n", gps.location.lat(), gps.location.lng());
+    while (Serial2.available()) gps.encode(Serial2.read());
+    
+    if (status == GPS_status::HAVE_LOCATION) {
+      gps_data.state = true;
+      gps_data.latitude = gps.location.lat();
+      gps_data.longitude = gps.location.lng();
+    }
+    xSemaphoreTake(mutex, portMAX_DELAY);
+    pub.publish(&gps_data);
+    nh.spinOnce();
+    xSemaphoreGive(mutex);
+
+    vTaskDelay(1000);
+
+    if (gps.charsProcessed() < 10) status = GPS_status::ERROR_WITH_MODULE;
   }
 }
 
 
-void gps_process(coordinates& cords) {
-  bool is_valid = gps.location.isValid();
-
-  set_status(is_valid?HAVE_LOCATION:HAVE_NOT_LOCATION);
-
-  if (cords.cords.size() != 0) {
-    u64 dist_to_next = (u64)TinyGPSPlus::distanceBetween(
-      gps.location.lat(),
-      gps.location.lng(),
-      cords.cords[cords.pos].f,
-      cords.cords[cords.pos].s
-    ) / 1000;
-
-    double course_to_next = TinyGPSPlus::courseTo(
-      gps.location.lat(),
-      gps.location.lng(),
-      cords.cords[cords.pos].f,
-      cords.cords[cords.pos].s
-    );
-  }
-
-  if (is_valid) Serial.printf("lat: %d | lon: %d\n", gps.location.lat(), gps.location.lng());
-
-  while (Serial2.available()) gps.encode(Serial2.read());
-  vTaskDelay(1000);
-
-  if (gps.charsProcessed() < 10) set_status(ERROR_WITH_MODULE);
-}
+} // namespace gps
+} // namespace sk
 
 
 #endif

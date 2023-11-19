@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>slon</name>
-  <version>0.0.0</version>
+  <version>0.1.0</version>
   <description>The slon package</description>
 
   <maintainer email="syn.kolbasyn.06@gmail.com">Andrew Kozmin</maintainer>
 
   <license>GPLv3</license>
 
-  <url type="repository">https://github.com/SynKolbasyn/slon</url>
+  <url type="repository">https://github.com/SynKolbasyn/slon.git</url>
 
   <author email="syn.kolbasyn.06@gmail.com">Andrew Kozmin</author>
 
@@ -19,7 +19,9 @@
   <build_export_depend>std_msgs</build_export_depend>
   <exec_depend>roscpp</exec_depend>
   <exec_depend>std_msgs</exec_depend>
-  
+  <build_depend>message_generation</build_depend>
+  <exec_depend>message_runtime</exec_depend>
+
   <export>
   </export>
 </package>

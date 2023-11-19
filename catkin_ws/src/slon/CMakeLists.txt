@@ -12,16 +12,29 @@ add_compile_options(-std=c++11)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
+  message_generation
 )
 
 find_package(Boost REQUIRED COMPONENTS system)
 find_package(OpenCV REQUIRED)
 
+add_message_files(
+  FILES
+  gps.msg
+  motors.msg
+  bt.msg
+)
+
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+)
+
 catkin_package(
- INCLUDE_DIRS include
- LIBRARIES slon
- CATKIN_DEPENDS roscpp std_msgs
- DEPENDS system_lib
+  INCLUDE_DIRS include
+  LIBRARIES slon
+  CATKIN_DEPENDS roscpp std_msgs
+  DEPENDS system_lib
 )
 
 include_directories(
@@ -32,8 +45,12 @@ include_directories(
 )
 
 add_executable(${PROJECT_NAME}_main_node src/main.cpp)
-target_link_libraries(${PROJECT_NAME}_main_node ${catkin_LIBRARIES} ${OpenCV_LIBS} ${Boost_LIBRARIES})
+target_link_libraries(${PROJECT_NAME}_main_node ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 add_dependencies(${PROJECT_NAME}_main_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
+add_executable(${PROJECT_NAME}_camera_node src/camera.cpp)
+target_link_libraries(${PROJECT_NAME}_camera_node ${catkin_LIBRARIES} ${OpenCV_LIBS} ${Boost_LIBRARIES})
+add_dependencies(${PROJECT_NAME}_camera_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 add_executable(${PROJECT_NAME}_test_node test/main.cpp)
 target_link_libraries(${PROJECT_NAME}_test_node ${catkin_LIBRARIES} ${OpenCV_LIBS} ${Boost_LIBRARIES})

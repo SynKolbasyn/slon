@@ -1,0 +1,3 @@
+<launch>
+    <node pkg="slon" name="main" type="slon_main_node" />
+</launch>

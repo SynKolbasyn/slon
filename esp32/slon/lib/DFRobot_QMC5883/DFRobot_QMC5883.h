@@ -264,7 +264,7 @@ class DFRobot_QMC5883
      * @fn getHeadingDegrees
      * @brief Set the sensor range
      */
-    void getHeadingDegrees(void);
+    float getHeadingDegrees(void);
 
     /**
      * @fn getICType

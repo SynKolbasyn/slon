@@ -378,7 +378,7 @@ void DFRobot_QMC5883::setDeclinationAngle(float declinationAngle)
   this->ICdeclinationAngle = declinationAngle;
 }
 
-void DFRobot_QMC5883::getHeadingDegrees(void)
+float DFRobot_QMC5883::getHeadingDegrees(void)
 {
   float heading = atan2(v.YAxis ,v.XAxis);
   heading += this->ICdeclinationAngle - PI/2.0;
@@ -387,6 +387,7 @@ void DFRobot_QMC5883::getHeadingDegrees(void)
   if(heading > 2*PI)
     heading -= 2*PI;
   v.HeadingDegress = heading * 180/PI;
+  return v.HeadingDegress;
 }
 
 int DFRobot_QMC5883::getICType(void)
