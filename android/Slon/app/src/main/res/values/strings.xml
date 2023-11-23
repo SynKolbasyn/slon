@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">Slon</string>
     <string name="button_save">Save</string>
-    <string name="button_select">Select</string>
+    <string name="button_start">Start</string>
     <string name="title_activity_gpsactivity">GPSActivity</string>
+    <string name="button_forward">Forward</string>
+    <string name="button_back">Back</string>
+    <string name="button_right">Right</string>
+    <string name="button_left">Left</string>
+    <string name="button_stop">Stop</string>
 </resources>

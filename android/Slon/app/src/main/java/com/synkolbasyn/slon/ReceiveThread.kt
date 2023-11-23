@@ -37,8 +37,10 @@ class ReceiveThread(socket: BluetoothSocket) : Thread() {
                 val message = String(buf, 0, size!!)
                 Log.d("MY_ERRORS", message)
                 val values: List<String> = message.split(";")
-                lat.value = values[0].toDouble()
-                lon.value = values[1].toDouble()
+                if (values.size == 2) {
+                    lat.value = values[0].toDouble()
+                    lon.value = values[1].toDouble()
+                }
             }
             catch (i: IOException) {
                 break
