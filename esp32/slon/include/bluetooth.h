@@ -77,6 +77,7 @@ void loop_bluetooth() {
 
 
 void message_process(const std_msgs::String& msg) {
+  if (!bt.availableForWrite()) return;
   string data(msg.data);
   uint8_t buf[data.size()];
   for (u64 i = 0; i < data.size(); ++i) buf[i] = data[i];

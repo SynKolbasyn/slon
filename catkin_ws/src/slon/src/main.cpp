@@ -135,6 +135,7 @@ int main(int argc, char** argv) {
 	Subscriber gps_sub = nh.subscribe("gps_data", 1000, gps_listener);
 	Subscriber bt_sub = nh.subscribe("recieve_by_bluetooth", 1000, bluetooth_listener);
 	Publisher mot_pub = nh.advertise<motors>("motors_control", 1000);
+	Publisher bt_pub = nh.advertise<String>("send_by_bluetooth", 1000);
 	
 
 	Rate loop_rate(10);
@@ -150,6 +151,10 @@ int main(int argc, char** argv) {
 		pair<double, double> speed = pid(dist_to, angle_to);
 
 		go(speed.first, speed.second);
+
+		String gps_d;
+		gps_d.data = std::to_string(lat) + ";" + std::to_string(lon);
+		bt_pub.publish(gps_d);
 
 		spinOnce();
 		loop_rate.sleep();
@@ -196,22 +201,27 @@ void bluetooth_listener(const bt& msg) {
 
 	else if (msg.command.compare("Forward") == 0) {
 		go(msg.speed, msg.speed);
+		robot_state = false;
 	}
 
 	else if (msg.command.compare("Back") == 0) {
 		go(-msg.speed, -msg.speed);
+		robot_state = false;
 	}
 
 	else if (msg.command.compare("Left") == 0) {
 		go(-msg.speed, msg.speed);
+		robot_state = false;
 	}
 
 	else if (msg.command.compare("Right") == 0) {
 		go(msg.speed, -msg.speed);
+		robot_state = false;
 	}
 
 	else if (msg.command.compare("Stop") == 0) {
 		go(0, 0);
+		robot_state = false;
 	}
 }
 
