@@ -54,15 +54,15 @@ void main_compass(void* pvParameters) {
 
 
   while (true) {
-    unsigned long startMillis = millis();
-    accelerometer.readAccelerationGXYZ(ax, ay, az);
-    gyroscope.readRotationRadXYZ(gx, gy, gz);
-    compass.readCalibrateMagneticGaussXYZ(mx, my, mz);
-    filter.setFrequency(sampleRate);
-    filter.update(gx, gy, gz, ax, ay, az, mx, my, mz);
-    yaw = filter.getYawDeg();
-    pitch = filter.getPitchDeg();
-    roll = filter.getRollDeg();
+    // unsigned long startMillis = millis();
+    // accelerometer.readAccelerationGXYZ(ax, ay, az);
+    // gyroscope.readRotationRadXYZ(gx, gy, gz);
+    // compass.readCalibrateMagneticGaussXYZ(mx, my, mz);
+    // filter.setFrequency(sampleRate);
+    // filter.update(gx, gy, gz, ax, ay, az, mx, my, mz);
+    // yaw = filter.getYawDeg();
+    // pitch = filter.getPitchDeg();
+    // roll = filter.getRollDeg();
     
     // Serial.print("yaw: ");
     // Serial.print(yaw);
@@ -72,8 +72,8 @@ void main_compass(void* pvParameters) {
     // Serial.print("\t\t");
     // Serial.print("roll: ");
     // Serial.println(roll);
-    
-    float angle = yaw;
+    float angle = 0.0;
+    if (!isnan(yaw)) angle = yaw;
     compass_data.data = angle;
     xSemaphoreTake(mutex, portMAX_DELAY);
     pub.publish(&compass_data);
@@ -81,8 +81,8 @@ void main_compass(void* pvParameters) {
     xSemaphoreGive(mutex);
     vTaskDelay(100);
 
-    unsigned long deltaMillis = millis() - startMillis;
-    sampleRate = 1000 / deltaMillis;
+    // unsigned long deltaMillis = millis() - startMillis;
+    // sampleRate = 1000 / deltaMillis;
   }
 }
 

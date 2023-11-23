@@ -42,9 +42,35 @@ using slon::motors;
 using slon::bt;
 
 
+bool robot_state = 0;
+float robot_direction = 0.0;
+
+bool gps_state = false;
+double lat = 0.0;
+double lon = 0.0;
+
+const double k_speed = 70.0;
+const double k_p = 1.0;
+const double k_i = 1.0;
+const double k_d = 1.0;
+double I = 0.0;
+auto dt = high_resolution_clock::now();
+double prev_angle_err = 0.0;
+
+int lspeed = 0;
+int rspeed = 0;
+
+
+auto prev_bt_send_time = high_resolution_clock::now();
+
+
 struct Coordinates {
     vector<pair<double, double>> cords;
     long long pos = 0;
+
+	void save_cords() {
+		cords.push_back(pair<double, double>{lat, lon});
+	}
 
 	pair<double, double> get_next_cords() {
 		if (cords.size() >= pos) pos = 0;
@@ -99,23 +125,6 @@ struct Coordinates {
 
 
 Coordinates coordinates;
-bool robot_state = 0;
-float robot_direction = 0.0;
-
-bool gps_state = false;
-double lat = 0.0;
-double lon = 0.0;
-
-const double k_speed = 70.0;
-const double k_p = 1.0;
-const double k_i = 1.0;
-const double k_d = 1.0;
-double I = 0.0;
-auto dt = high_resolution_clock::now();
-double prev_angle_err = 0.0;
-
-int lspeed = 0;
-int rspeed = 0;
 
 
 pair<double, double> pid(double dist, double angle);
@@ -123,7 +132,6 @@ void compass_listener(const Float32& msg);
 void gps_listener(const gps& msg);
 void bluetooth_listener(const bt& msg);
 void go(int lspeed, int rspeed);
-void bt_save();
 
 
 int main(int argc, char** argv) {
@@ -140,10 +148,22 @@ int main(int argc, char** argv) {
 
 	Rate loop_rate(10);
 	while (ok()) {
+		spinOnce();
+		loop_rate.sleep();
+		
 		motors msg;
 		msg.l_speed = lspeed;
 		msg.r_speed = rspeed;
 		mot_pub.publish(msg);
+		
+		if ((high_resolution_clock::now() - prev_bt_send_time).count() > 1000000000) {
+			String gps_d;
+			gps_d.data = std::to_string(lat) + ";" + std::to_string(lon);
+			bt_pub.publish(gps_d);
+			ROS_INFO("BLUETOOTH SEND: %s", gps_d.data.c_str());
+			prev_bt_send_time = high_resolution_clock::now();
+		}
+
 		if (!robot_state) continue;
 
 		double dist_to = coordinates.get_dist_to_next(lat, lon);
@@ -151,13 +171,6 @@ int main(int argc, char** argv) {
 		pair<double, double> speed = pid(dist_to, angle_to);
 
 		go(speed.first, speed.second);
-
-		String gps_d;
-		gps_d.data = std::to_string(lat) + ";" + std::to_string(lon);
-		bt_pub.publish(gps_d);
-
-		spinOnce();
-		loop_rate.sleep();
 	}
 	
 	return 0;
@@ -192,7 +205,9 @@ void gps_listener(const gps& msg) {
 void bluetooth_listener(const bt& msg) {
 	ROS_INFO("BLUETOOTH: %s", msg.data.c_str());
 	if (msg.command.compare("Save") == 0) {
-		bt_save();
+		go(0, 0);
+		robot_state = false;
+		coordinates.save_cords();
 	}
 
 	else if (msg.command.compare("Start") == 0) {
@@ -229,10 +244,4 @@ void bluetooth_listener(const bt& msg) {
 void go(int l_speed, int r_speed) {
 	lspeed = l_speed;
 	rspeed = r_speed;
-}
-
-
-void bt_save() {
-	if (!gps_state) return;
-	coordinates.cords.push_back(pair<double, double> {lat, lon});
 }

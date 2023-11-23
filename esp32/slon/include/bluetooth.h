@@ -77,7 +77,7 @@ void loop_bluetooth() {
 
 
 void message_process(const std_msgs::String& msg) {
-  if (!bt.availableForWrite()) return;
+  // if (!bt.availableForWrite()) return;
   string data(msg.data);
   uint8_t buf[data.size()];
   for (u64 i = 0; i < data.size(); ++i) buf[i] = data[i];
@@ -91,7 +91,7 @@ string recv_bt() {
     bt_data += (char)bt.read();
     vTaskDelay(1);
   }
-  if (bt_data.find(";") == bt_data.rfind(";")) return string();
+  if (bt_data.find(";") == string::npos) return string();
   return bt_data;
 }
 
