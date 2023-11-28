@@ -23,6 +23,7 @@ add_message_files(
   gps.msg
   motors.msg
   bt.msg
+  qrcode.msg
 )
 
 generate_messages(
