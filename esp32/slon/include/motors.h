@@ -67,10 +67,10 @@ void motors_process(const slon::motors& speed) {
 
 
 void go(int lSpeed, int rSpeed) {
-  set_motor_speeds(1, rSpeed, rSpeed);
+  set_motor_speeds(1, -lSpeed, -lSpeed);
   set_motor_speeds(2, rSpeed, rSpeed);
-  set_motor_speeds(3, lSpeed, lSpeed);
-  set_motor_speeds(4, lSpeed, lSpeed);
+  set_motor_speeds(3, rSpeed, rSpeed);
+  set_motor_speeds(4, -lSpeed, -lSpeed);
 }
 
 

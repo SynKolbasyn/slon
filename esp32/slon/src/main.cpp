@@ -8,12 +8,14 @@ SemaphoreHandle_t mutex = xSemaphoreCreateMutex();
 #include "compass.h"
 #include "gps.h"
 #include "bluetooth.h"
+#include "sprayer.h"
 
 
 using sk::motors::main_motors;
 using sk::compass::main_compass;
 using sk::gps::main_gps;
 using sk::bluetooth::main_bluetooth;
+using sk::sprayer::main_sprayer;
 
 
 void setup() {
@@ -23,7 +25,10 @@ void setup() {
   xTaskCreate(main_compass, "compass", 2048, NULL, 1, NULL);
   xTaskCreate(main_gps, "gps", 2048, NULL, 1, NULL);
   xTaskCreate(main_bluetooth, "bluetooth", 4096, NULL, 1, NULL);
+  xTaskCreate(main_sprayer, "sprayer", 2048, NULL, 1, NULL);
 }
 
 
-void loop() {}
+void loop() {
+  vTaskDelay(1000000);
+}
