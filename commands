@@ -1,2 +1,7 @@
 rosrun rosserial_python serial_node.py _port:=/dev/ttyUSB0 _baud:=115200
 source ~/programs/other/slon/catkin_ws/devel/setup.sh
+rosrun robot_upstart install slon/launch/main.launch --job ros_slon --symlink
+source ~/programs/other/tmp/slon/catkin_ws/devel/setup.sh
+roslaunch ~/programs/other/tmp/slon/catkin_ws/src/slon/launch/main.launch
+sudo systemctl start ros_slon
+sudo systemctl stop ros_slon

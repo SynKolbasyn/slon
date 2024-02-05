@@ -1,3 +1,7 @@
 <launch>
-    <node pkg="slon" name="main" type="slon_main_node" />
+    <node pkg="slon" name="slon_main_node" type="slon_main_node" />
+    <node pkg="rosserial_python" name="serial_node" type="serial_node.py">
+        <param name="port" type="string" value="/dev/ttyUSB0" />
+        <param name="baud" type="int" value="115200" />
+    </node>
 </launch>
