@@ -10,6 +10,7 @@
 #include "slon/gps.h"
 #include "slon/motors.h"
 #include "slon/bt.h"
+#include "slon/qrcode.h"
 
 
 #define MY_PI 3.1415926535897932384626433832795
@@ -40,6 +41,7 @@ using std_msgs::String;
 using slon::gps;
 using slon::motors;
 using slon::bt;
+using slon::qrcode;
 
 
 bool robot_state = 0;
@@ -57,9 +59,20 @@ double I = 0.0;
 auto dt = high_resolution_clock::now();
 double prev_angle_err = 0.0;
 
+const double k_qr_speed = 70.0;
+const double k_qr_p = 1.0;
+const double k_qr_i = 0.0;
+const double k_qr_d = 0.0;
+double qr_I = 0.0;
+auto qr_dt = high_resolution_clock::now();
+double prev_qr_angle_err = 0.0;
+
 int lspeed = 0;
 int rspeed = 0;
 
+float qr_dist = 0.0;
+float qr_x = 0.0;
+float qr_y = 0.0;
 
 auto prev_bt_send_time = high_resolution_clock::now();
 
@@ -128,9 +141,11 @@ Coordinates coordinates;
 
 
 pair<double, double> pid(double dist, double angle);
+pair<double, double> qr_pid();
 void compass_listener(const Float32& msg);
 void gps_listener(const gps& msg);
 void bluetooth_listener(const bt& msg);
+void camera_listener(const qrcode& qr_pos);
 void go(int lspeed, int rspeed);
 
 
@@ -139,6 +154,7 @@ int main(int argc, char** argv) {
 
 	NodeHandle nh;
 
+	Subscriber camera_sub = nh.subscribe("qr_code_pos", 1000, camera_listener);
 	Subscriber compass_sub = nh.subscribe("compass_data", 1000, compass_listener);
 	Subscriber gps_sub = nh.subscribe("gps_data", 1000, gps_listener);
 	Subscriber bt_sub = nh.subscribe("recieve_by_bluetooth", 1000, bluetooth_listener);
@@ -167,13 +183,27 @@ int main(int argc, char** argv) {
 		if (!robot_state) continue;
 
 		double dist_to = coordinates.get_dist_to_next(lat, lon);
-		double angle_to = coordinates.get_angle_to_next(lat, lon);
-		pair<double, double> speed = pid(dist_to, angle_to);
 
-		go(speed.first, speed.second);
+		if (dist_to <= 10) {
+			pair<double, double> speed = qr_pid();
+			go(speed.first, speed.second);
+		}
+		else {
+			double angle_to = coordinates.get_angle_to_next(lat, lon);
+			pair<double, double> speed = pid(dist_to, angle_to);
+			go(speed.first, speed.second);
+		}
 	}
 	
 	return 0;
+}
+
+
+void camera_listener(const qrcode& qr_pos) {
+	ROS_INFO("QR CODE POS: (%f, %f) -> %f", qr_pos.x, qr_pos.y, qr_pos.dist);
+	qr_dist = qr_pos.dist;
+	qr_x = qr_pos.x;
+	qr_y = qr_pos.y;
 }
 
 
@@ -190,6 +220,20 @@ pair<double, double> pid(double dist, double angle) {
 	return pair<double, double> {speed + U, speed - U};
 }
 
+pair<double, double> qr_pid() {
+	auto now = high_resolution_clock::now();
+	double speed = qr_dist * k_qr_speed;
+	double angle_err = 0.5 - qr_x;
+	double P = angle_err * k_qr_p;
+	qr_I += angle_err * (now - qr_dt).count() * k_qr_i;
+	double D = (angle_err - prev_qr_angle_err) / (now - qr_dt).count() * k_qr_d;
+	double U = P + qr_I + D;
+	prev_qr_angle_err = angle_err;
+	qr_dt = high_resolution_clock::now();
+	return pair<double, double> {speed + U, speed - U};
+}
+
+
 void compass_listener(const Float32& msg) {
 	robot_direction = msg.data;
 	ROS_INFO("COMPASS: %f", robot_direction);
@@ -198,7 +242,8 @@ void compass_listener(const Float32& msg) {
 
 void gps_listener(const gps& msg) {
 	gps_state = msg.state;
-	
+	lat = msg.latitude;
+	lon = msg.longitude;
 }
 
 

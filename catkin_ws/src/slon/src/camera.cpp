@@ -1,30 +1,16 @@
 #include <iostream>
-#include <string>
 #include <vector>
-#include <sstream>
-#include <array>
-#include <utility>
+#include <cmath>
 
-#include <ros/ros.h>
-#include <std_msgs/Int32.h>
-#include <std_msgs/Int32MultiArray.h>
+#include "ros/ros.h"
+#include "slon/qrcode.h"
 
 #include <opencv2/opencv.hpp>
-
-#include <boost/algorithm/minmax_element.hpp>
-
-
-typedef std::array<int, 4> array;
 
 
 using std::cerr;
 using std::endl;
-using std::string;
 using std::vector;
-using std::stringstream;
-
-using std_msgs::Int32;
-using std_msgs::Int32MultiArray;
 
 using ros::ok;
 using ros::init;
@@ -46,11 +32,25 @@ using cv::VideoCapture;
 using cv::QRCodeDetector;
 using cv::destroyAllWindows;
 
+using slon::qrcode;
+
+
+const int camera_width = 640;
+const int camera_heigh = 480;
+const float width_to_0_1 = camera_width * 4;
+const float heigh_to_0_1 = camera_heigh * 4;
+
+const float real_width = 1.0;
+const float focal_length = ((1.0 * 1.0) / real_width); // ((widthInImage * knowDistance) / real_width);
+
+
+float get_dist_to_qr(int x, int y, int x1, int y1);
+
 
 int main(int argc, char** argv) {
     init(argc, argv, "camera");
     NodeHandle n;
-    Publisher chatter_pub = n.advertise<Int32MultiArray>("main", 1000);
+    Publisher chatter_pub = n.advertise<qrcode>("qr_code_pos", 1000);
 
     VideoCapture video(0, CAP_ANY);
 	
@@ -60,18 +60,16 @@ int main(int argc, char** argv) {
 		return -1;
 	}
 	
-	video.set(CAP_PROP_FRAME_WIDTH, 640);
-	video.set(CAP_PROP_FRAME_HEIGHT, 480);
+	video.set(CAP_PROP_FRAME_WIDTH, camera_width);
+	video.set(CAP_PROP_FRAME_HEIGHT, camera_heigh);
 	
 	Mat frame;
 	
 	QRCodeDetector qcd;
 	vector<Point> points;
 	Scalar color(0, 0, 255);
-
-    Int32MultiArray arr;
 	
-	Rate loop_rate(100);
+	Rate loop_rate(10);
 	
 	while (ok()) {
 		if (!video.read(frame)) {
@@ -84,13 +82,12 @@ int main(int argc, char** argv) {
 		qcd.detect(frame, points);
 		if (points.size() == 4) {
 			polylines(frame, points, true, color, 5);
-			array a{{points[0].x, points[1].x, points[2].x, points[3].x}};
-			std::pair<array::iterator, array::iterator> p = boost::minmax_element(a.begin(), a.end());
-            arr.data.push_back(*p.first);
-            arr.data.push_back(*p.second);
-            chatter_pub.publish(arr);
-			ROS_INFO("[%i, %i]", arr.data[0], arr.data[1]);
-            arr.data.clear();
+			qrcode qr_pos;
+			qr_pos.x = (points[0].x + points[1].x + points[2].x + points[3].x) / width_to_0_1; // avg (1 + 2 + 3 + 4) / 4 / camera width | for diapazon 0 - 1
+			qr_pos.y = (points[0].y + points[1].y + points[2].y + points[3].y) / heigh_to_0_1; // Same, but with heigh
+			qr_pos.dist = get_dist_to_qr(points[0].x, points[0].y, points[1].x, points[1].y);
+            chatter_pub.publish(qr_pos);
+			ROS_INFO("(%f, %f) -> %f", qr_pos.x, qr_pos.y, qr_pos.dist);
 		}
 		points.clear();
 		
@@ -106,4 +103,10 @@ int main(int argc, char** argv) {
 	destroyAllWindows();
 
     return 0;
+}
+
+
+float get_dist_to_qr(int x, int y, int x1, int y1) {
+	float eucaldain_dist = sqrt(pow(x1 - x, 2) + pow(y1 - y, 2));
+	return real_width * focal_length / eucaldain_dist;
 }
