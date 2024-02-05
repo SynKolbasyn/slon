@@ -40,11 +40,11 @@ const int camera_heigh = 480;
 const float width_to_0_1 = camera_width * 4;
 const float heigh_to_0_1 = camera_heigh * 4;
 
-const float real_width = 1.0;
-const float focal_length = ((1.0 * 1.0) / real_width); // ((widthInImage * knowDistance) / real_width);
+const float real_width = 0.07;
+const float focal_length = ((5.0 * 10.0) / real_width); // ((widthInImage * knowDistance) / real_width);
 
 
-float get_dist_to_qr(int x, int y, int x1, int y1);
+float get_dist_to_qr(double x, double y, double x1, double y1);
 
 
 int main(int argc, char** argv) {
@@ -54,10 +54,11 @@ int main(int argc, char** argv) {
 
     VideoCapture video(0, CAP_ANY);
 	
-	if (!video.isOpened()) {
+	while (!video.isOpened()) {
 		cerr << "ERROR: Can't open video" << endl;
-		video.release();
-		return -1;
+		video = VideoCapture(0, CAP_ANY);
+		// video.release();
+		// return -1;
 	}
 	
 	video.set(CAP_PROP_FRAME_WIDTH, camera_width);
@@ -74,9 +75,11 @@ int main(int argc, char** argv) {
 	while (ok()) {
 		if (!video.read(frame)) {
 			cerr << "ERROR: Can't read frame" << endl;
-			video.release();
-			destroyAllWindows();
-			return -1;
+			video = VideoCapture(0, CAP_ANY);
+			continue;
+			// video.release();
+			// destroyAllWindows();
+			// return -1;
 		}
 
 		qcd.detect(frame, points);
@@ -85,7 +88,7 @@ int main(int argc, char** argv) {
 			qrcode qr_pos;
 			qr_pos.x = (points[0].x + points[1].x + points[2].x + points[3].x) / width_to_0_1; // avg (1 + 2 + 3 + 4) / 4 / camera width | for diapazon 0 - 1
 			qr_pos.y = (points[0].y + points[1].y + points[2].y + points[3].y) / heigh_to_0_1; // Same, but with heigh
-			qr_pos.dist = get_dist_to_qr(points[0].x, points[0].y, points[1].x, points[1].y);
+			qr_pos.dist = get_dist_to_qr(points[0].x, points[0].y, points[2].x, points[2].y);
             chatter_pub.publish(qr_pos);
 			ROS_INFO("(%f, %f) -> %f", qr_pos.x, qr_pos.y, qr_pos.dist);
 		}
@@ -106,7 +109,11 @@ int main(int argc, char** argv) {
 }
 
 
-float get_dist_to_qr(int x, int y, int x1, int y1) {
-	float eucaldain_dist = sqrt(pow(x1 - x, 2) + pow(y1 - y, 2));
-	return real_width * focal_length / eucaldain_dist;
+// float get_dist_to_qr(double x, double y, double x1, double y1) {
+// 	float eucaldain_dist = sqrt(pow(x1 - x, 2) + pow(y1 - y, 2));
+// 	return real_width * focal_length / eucaldain_dist;
+// }
+float get_dist_to_qr(double x, double y, double x1, double y1) {
+	if (((x1 - x) > (camera_width / 4)) && ((y1 - y) > (camera_heigh / 3))) return 50;
+	return 200;
 }

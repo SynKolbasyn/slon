@@ -178,7 +178,7 @@ int main(int argc, char** argv) {
 
 		if (!robot_state) continue;
 
-		if ((lspeed < 10) && (rspeed < 10) && (sprayer_flag)) {
+		if ((lspeed < 10) && (rspeed < 10) && (sprayer_flag) && (qr_dist < 100)) {
 			Bool sprayer_state;
 			sprayer_state.data = true;
 			sprayer_pub.publish(sprayer_state);
