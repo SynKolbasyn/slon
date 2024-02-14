@@ -56,3 +56,11 @@ add_dependencies(${PROJECT_NAME}_camera_node ${${PROJECT_NAME}_EXPORTED_TARGETS}
 add_executable(${PROJECT_NAME}_test_node test/main.cpp)
 target_link_libraries(${PROJECT_NAME}_test_node ${catkin_LIBRARIES} ${OpenCV_LIBS} ${Boost_LIBRARIES})
 add_dependencies(${PROJECT_NAME}_test_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
+add_executable(${PROJECT_NAME}_camera_calibration_node src/camera_calibration.cpp)
+target_link_libraries(${PROJECT_NAME}_camera_calibration_node ${catkin_LIBRARIES} ${OpenCV_LIBS} ${Boost_LIBRARIES})
+add_dependencies(${PROJECT_NAME}_camera_calibration_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
+add_executable(${PROJECT_NAME}_camera_detection_node src/camera_detection.cpp)
+target_link_libraries(${PROJECT_NAME}_camera_detection_node ${catkin_LIBRARIES} ${OpenCV_LIBS} ${Boost_LIBRARIES})
+add_dependencies(${PROJECT_NAME}_camera_detection_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
