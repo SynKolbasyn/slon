@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <cstdint>
+#include <cstdlib>
 
 #include <opencv2/opencv.hpp>
 #include "aruco_samples_utility.hpp"
@@ -21,7 +22,7 @@ int main(int argc, char** argv) {
     cv::aruco::ArucoDetector detector(dictionary, detectorParams);
 
     cv::Mat cam_matrix, dist_coeffs;
-    if (!readCameraParameters("camera_calibration_data_640_480.yaml", cam_matrix, dist_coeffs)) {
+    if (!readCameraParameters(std::getenv("CAMERA_CALIBRATION_DATA_PATH"), cam_matrix, dist_coeffs)) {
         std::cerr << "[ ERROR ] -> can not read camera calibration data" << std::endl;
         return -1;
     }
@@ -42,15 +43,14 @@ int main(int argc, char** argv) {
     object_points.ptr<cv::Vec3f>(0)[2] = cv::Vec3f(marker_length / 2.0, -marker_length / 2.0, 0);
     object_points.ptr<cv::Vec3f>(0)[3] = cv::Vec3f(-marker_length / 2.0, -marker_length / 2.0, 0);
 
-    ros::Rate loop_rate(10);
-
     while (ros::ok()) {
         cv::Mat frame, gray;
         if (!video.read(frame)) {
             std::cerr << "[ ERROR ] -> can not read frame" << std::endl;
-            video.release();
-            cv::destroyAllWindows();
-            return -1;
+            // video.release();
+            // cv::destroyAllWindows();
+            // return -1;
+            continue;
         }
         cv::cvtColor(frame, gray, cv::COLOR_BGR2GRAY);
 
@@ -86,7 +86,6 @@ int main(int argc, char** argv) {
         if (cv::waitKey(1) == 27) break;
 
         ros::spinOnce();
-		loop_rate.sleep();
     }
 
     video.release();

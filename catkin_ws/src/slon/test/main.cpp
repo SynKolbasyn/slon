@@ -181,9 +181,11 @@ int main(int argc, char** argv) {
 		if ((lspeed < 10) && (rspeed < 10) && (sprayer_flag) && (qr_dist < 100)) {
 			Bool sprayer_state;
 			sprayer_state.data = true;
-			sprayer_pub.publish(sprayer_state);
+			for (int i = 0; i < 1000; ++i) sprayer_pub.publish(sprayer_state);
 			auto spray_timer = high_resolution_clock::now();
 			while ((high_resolution_clock::now() - spray_timer).count() < 1000000000);
+			sprayer_state.data = false;
+			for (int i = 0; i < 1000; ++i) sprayer_pub.publish(sprayer_state);
 			sprayer_flag = false;
 		}
 		
@@ -200,7 +202,6 @@ int main(int argc, char** argv) {
 void camera_listener(const qrcode& qr_pos) {
 	ROS_INFO("QR CODE POS: (%f, %f) -> %f", qr_pos.x, qr_pos.y, qr_pos.dist);
 	qr_dist = qr_pos.dist;
-	if (qr_dist < 100) qr_dist = 0;
 	qr_x = qr_pos.x;
 	qr_y = qr_pos.y;
 }
@@ -209,7 +210,7 @@ void camera_listener(const qrcode& qr_pos) {
 pair<double, double> qr_pid() {
 	auto now = high_resolution_clock::now();
 	double speed = qr_dist * k_qr_speed;
-	double angle_err = 0.5 - qr_x;
+	double angle_err = 0.0 - qr_x;
 	double P = angle_err * k_qr_p;
 	qr_I += angle_err * (now - qr_dt).count() * k_qr_i;
 	double D = (angle_err - prev_qr_angle_err) / (now - qr_dt).count() * k_qr_d;
