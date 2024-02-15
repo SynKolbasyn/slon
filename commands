@@ -3,5 +3,6 @@ source ~/programs/other/slon/catkin_ws/devel/setup.sh
 rosrun robot_upstart install slon/launch/main.launch --job ros_slon --symlink
 source ~/programs/other/tmp/slon/catkin_ws/devel/setup.sh
 roslaunch ~/programs/other/tmp/slon/catkin_ws/src/slon/launch/main.launch
+rosrun robot_upstart install $SLON_LAUNCH_FILE_PATH --job ros_slon
 sudo systemctl start ros_slon
 sudo systemctl stop ros_slon
