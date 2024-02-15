@@ -71,6 +71,7 @@ float qr_y = 0.0;
 auto prev_bt_send_time = high_resolution_clock::now();
 
 bool sprayer_flag = true;
+bool horn_state = false;
 
 
 struct Coordinates {
@@ -156,6 +157,7 @@ int main(int argc, char** argv) {
 	Publisher mot_pub = nh.advertise<motors>("motors_control", 1000);
 	Publisher bt_pub = nh.advertise<String>("send_by_bluetooth", 1000);
 	Publisher sprayer_pub = nh.advertise<Bool>("sprayer_control", 1000);
+	Publisher horn_pub = nh.advertise<Bool>("horn_control", 1000);
 	
 
 	Rate loop_rate(10);
@@ -167,6 +169,15 @@ int main(int argc, char** argv) {
 		msg.l_speed = lspeed;
 		msg.r_speed = rspeed;
 		mot_pub.publish(msg);
+
+		if (horn_state) {
+			std_msgs::Bool horn_data;
+			horn_data.data = true;
+			horn_pub.publish(horn_data);
+			horn_data.data = false;
+			horn_pub.publish(horn_data);
+			horn_state = false;
+		}
 		
 		if ((high_resolution_clock::now() - prev_bt_send_time).count() > 1000000000) {
 			String gps_d;
@@ -275,6 +286,10 @@ void bluetooth_listener(const bt& msg) {
 	else if (msg.command.compare("Stop") == 0) {
 		go(0, 0);
 		robot_state = false;
+	}
+
+	else if (msg.command.compare("HORN") == 0) {
+		horn_state = true;
 	}
 }
 
