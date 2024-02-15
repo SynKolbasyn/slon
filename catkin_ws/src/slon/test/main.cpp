@@ -53,8 +53,8 @@ bool gps_state = false;
 double lat = 0.0;
 double lon = 0.0;
 
-const double k_qr_speed = 70.0;
-const double k_qr_p = 1.0;
+const double k_qr_speed = 0.25;
+const double k_qr_p = 40.0;
 const double k_qr_i = 0.0;
 const double k_qr_d = 0.0;
 double qr_I = 0.0;
@@ -64,7 +64,7 @@ double prev_qr_angle_err = 0.0;
 int lspeed = 0;
 int rspeed = 0;
 
-float qr_dist = 0.0;
+float qr_dist = 150.0;
 float qr_x = 0.0;
 float qr_y = 0.0;
 
@@ -192,7 +192,7 @@ int main(int argc, char** argv) {
 		pair<double, double> spd = qr_pid();
 
 		lspeed = spd.first;
-		lspeed = spd.second;
+		rspeed = spd.second;
 	}
 	
 	return 0;

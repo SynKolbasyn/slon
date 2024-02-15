@@ -81,7 +81,7 @@ int main(int argc, char** argv) {
             }
         }
 
-        imshow("aruco detection", frame);
+        // imshow("aruco detection", frame);
 
         if (cv::waitKey(1) == 27) break;
 
