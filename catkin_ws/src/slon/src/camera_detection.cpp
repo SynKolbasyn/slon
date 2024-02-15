@@ -71,6 +71,7 @@ int main(int argc, char** argv) {
         if (!ids.empty()) {
             cv::aruco::drawDetectedMarkers(frame, corners, ids);
             for (uint64_t i = 0; i < ids.size(); ++i) {
+                if (ids[i] != 0) continue;
                 cv::drawFrameAxes(frame, cam_matrix, dist_coeffs, rvecs[i], tvecs[i], marker_length, 2);
                 slon::qrcode qr_pos;
                 qr_pos.x = tvecs[i][0];
@@ -80,8 +81,15 @@ int main(int argc, char** argv) {
                 ROS_INFO("(%f, %f) -> %f", qr_pos.x, qr_pos.y, qr_pos.dist);
             }
         }
+        else {
+            slon::qrcode qr_pos;
+            qr_pos.x = 0.5;
+            qr_pos.y = 0.0;
+            qr_pos.dist = 150;
+            qr_code_pos_pub.publish(qr_pos);
+        }
 
-        // imshow("aruco detection", frame);
+        imshow("aruco detection", frame);
 
         if (cv::waitKey(1) == 27) break;
 

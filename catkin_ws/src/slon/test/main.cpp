@@ -53,8 +53,8 @@ bool gps_state = false;
 double lat = 0.0;
 double lon = 0.0;
 
-const double k_qr_speed = 0.25;
-const double k_qr_p = 40.0;
+const double k_qr_speed = 1.0;
+const double k_qr_p = 100.0;
 const double k_qr_i = 0.0;
 const double k_qr_d = 0.0;
 double qr_I = 0.0;
@@ -178,7 +178,13 @@ int main(int argc, char** argv) {
 
 		if (!robot_state) continue;
 
-		if ((lspeed < 10) && (rspeed < 10) && (sprayer_flag) && (qr_dist < 100)) {
+		if (qr_dist == 150.0) {
+			lspeed = 0;
+			rspeed = 0;
+			continue;
+		}
+
+		if ((sprayer_flag) && (qr_dist < 50)) {
 			Bool sprayer_state;
 			sprayer_state.data = true;
 			for (int i = 0; i < 1000; ++i) sprayer_pub.publish(sprayer_state);
