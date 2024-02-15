@@ -19,7 +19,7 @@ void loop_horn();
 void horn_process(const std_msgs::Bool& state);
 
 
-int pin_horn = 0;
+int pin_horn = 33;
 u64 prev_horn_time = 0;
 
 ros::Subscriber<std_msgs::Bool> sub("sprayer_control", horn_process);

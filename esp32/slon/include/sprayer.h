@@ -24,7 +24,7 @@ void sprayer_process(const std_msgs::Bool& state);
 
 Subscriber<std_msgs::Bool> sub("sprayer_control", sprayer_process);
 
-int sprayer_pin = 0;
+int sprayer_pin = 32;
 
 
 void main_sprayer(void* pvParameters) {
