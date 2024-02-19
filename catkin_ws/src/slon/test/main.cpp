@@ -235,7 +235,7 @@ pair<double, double> qr_pid() {
 	double U = P + qr_I + D;
 	prev_qr_angle_err = angle_err;
 	qr_dt = high_resolution_clock::now();
-	return pair<double, double> {speed + U, speed - U};
+	return pair<double, double> {speed - U, speed + U};
 }
 
 
