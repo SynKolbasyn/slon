@@ -174,6 +174,7 @@ int main(int argc, char** argv) {
 			std_msgs::Bool horn_data;
 			horn_data.data = true;
 			horn_pub.publish(horn_data);
+			// while ((high_resolution_clock::now() - prev_bt_send_time).count() > 1000000000);
 			horn_data.data = false;
 			horn_pub.publish(horn_data);
 			horn_state = false;

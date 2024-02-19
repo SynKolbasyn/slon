@@ -22,7 +22,7 @@ void horn_process(const std_msgs::Bool& state);
 int pin_horn = 33;
 u64 prev_horn_time = 0;
 
-ros::Subscriber<std_msgs::Bool> sub("sprayer_control", horn_process);
+ros::Subscriber<std_msgs::Bool> sub("horn_control", horn_process);
 
 
 void main_horn(void* pvParametrs) {
@@ -36,6 +36,7 @@ void setup_horn() {
   nh.subscribe(sub);
   xSemaphoreGive(mutex);
   pinMode(pin_horn, OUTPUT);
+  digitalWrite(pin_horn, LOW);
 }
 
 
@@ -44,7 +45,7 @@ void loop_horn() {
     xSemaphoreTake(mutex, portMAX_DELAY);
     nh.spinOnce();
     xSemaphoreGive(mutex);
-    vTaskDelay(500);
+    vTaskDelay(100);
   }
 }
 
@@ -54,7 +55,10 @@ void horn_process(const std_msgs::Bool& state) {
     digitalWrite(pin_horn, LOW);
     return;
   }
-  if (millis() < 15000 + prev_horn_time) return;
+  if (millis() < 15000 + prev_horn_time) {
+    digitalWrite(pin_horn, LOW);
+    return;
+  }
   digitalWrite(pin_horn, HIGH);
   prev_horn_time = millis();
   while (millis() < 1000 + prev_horn_time) vTaskDelay(10);
