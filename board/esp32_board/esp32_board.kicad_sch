@@ -2826,23 +2826,24 @@
 				)
 			)
 		)
-		(symbol "Mechanical:MountingHole"
+		(symbol "Device:R"
+			(pin_numbers hide)
 			(pin_names
-				(offset 1.016)
+				(offset 0)
 			)
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
-			(property "Reference" "H"
-				(at 0 5.08 0)
+			(property "Reference" "R"
+				(at 2.032 0 90)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
 				)
 			)
-			(property "Value" "MountingHole"
-				(at 0 3.175 0)
+			(property "Value" "R"
+				(at 0 0 90)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -2850,7 +2851,7 @@
 				)
 			)
 			(property "Footprint" ""
-				(at 0 0 0)
+				(at -1.778 0 90)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -2867,7 +2868,7 @@
 					(hide yes)
 				)
 			)
-			(property "Description" "Mounting Hole without connection"
+			(property "Description" "Resistor"
 				(at 0 0 0)
 				(effects
 					(font
@@ -2876,7 +2877,7 @@
 					(hide yes)
 				)
 			)
-			(property "ki_keywords" "mounting hole"
+			(property "ki_keywords" "R res resistor"
 				(at 0 0 0)
 				(effects
 					(font
@@ -2885,7 +2886,7 @@
 					(hide yes)
 				)
 			)
-			(property "ki_fp_filters" "MountingHole*"
+			(property "ki_fp_filters" "R_*"
 				(at 0 0 0)
 				(effects
 					(font
@@ -2894,16 +2895,54 @@
 					(hide yes)
 				)
 			)
-			(symbol "MountingHole_0_1"
-				(circle
-					(center 0 0)
-					(radius 1.27)
+			(symbol "R_0_1"
+				(rectangle
+					(start -1.016 -2.54)
+					(end 1.016 2.54)
 					(stroke
-						(width 1.27)
+						(width 0.254)
 						(type default)
 					)
 					(fill
 						(type none)
+					)
+				)
+			)
+			(symbol "R_1_1"
+				(pin passive line
+					(at 0 3.81 270)
+					(length 1.27)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -3.81 90)
+					(length 1.27)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
 					)
 				)
 			)
@@ -3679,39 +3718,30 @@
 				)
 			)
 		)
-		(symbol "Relay:Relay_SPST-NO"
+		(symbol "slon_modules:compass"
+			(pin_names
+				(offset 2.54)
+			)
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
-			(property "Reference" "K"
-				(at 11.43 3.81 0)
+			(property "Reference" "U"
+				(at -8.382 -7.366 0)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
-					(justify left)
 				)
 			)
-			(property "Value" "Relay_SPST-NO"
-				(at 11.43 1.27 0)
+			(property "Value" ""
+				(at 0 0 0)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
-					(justify left)
 				)
 			)
 			(property "Footprint" ""
-				(at 11.43 -1.27 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify left)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" "~"
 				(at 0 0 0)
 				(effects
 					(font
@@ -3720,7 +3750,7 @@
 					(hide yes)
 				)
 			)
-			(property "Description" "Relay SPST, Normally Open, EN50005"
+			(property "Datasheet" ""
 				(at 0 0 0)
 				(effects
 					(font
@@ -3729,7 +3759,7 @@
 					(hide yes)
 				)
 			)
-			(property "ki_keywords" "Single Pole Relay SPST NO"
+			(property "Description" ""
 				(at 0 0 0)
 				(effects
 					(font
@@ -3738,164 +3768,10 @@
 					(hide yes)
 				)
 			)
-			(property "ki_fp_filters" "Relay?SPST*"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "Relay_SPST-NO_0_0"
-				(polyline
-					(pts
-						(xy 7.62 5.08) (xy 7.62 2.54) (xy 6.985 3.175) (xy 7.62 3.81)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-			)
-			(symbol "Relay_SPST-NO_0_1"
+			(symbol "compass_0_1"
 				(rectangle
-					(start -10.16 5.08)
-					(end 10.16 -5.08)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type background)
-					)
-				)
-				(rectangle
-					(start -8.255 1.905)
-					(end -1.905 -1.905)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy -7.62 -1.905) (xy -2.54 1.905)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy -5.08 -5.08) (xy -5.08 -1.905)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy -5.08 5.08) (xy -5.08 1.905)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy -1.905 0) (xy -1.27 0)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy -0.635 0) (xy 0 0)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0.635 0) (xy 1.27 0)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 1.905 0) (xy 2.54 0)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 3.175 0) (xy 3.81 0)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 5.08 -2.54) (xy 3.175 3.81)
-					)
-					(stroke
-						(width 0.508)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 5.08 -2.54) (xy 5.08 -5.08)
-					)
+					(start 7.62 0)
+					(end -7.62 15.24)
 					(stroke
 						(width 0)
 						(type default)
@@ -3905,18 +3781,90 @@
 					)
 				)
 			)
-			(symbol "Relay_SPST-NO_1_1"
+			(symbol "compass_1_1"
 				(pin passive line
-					(at 5.08 -7.62 90)
+					(at -2.54 -2.54 90)
 					(length 2.54)
-					(name "~"
+					(name ""
 						(effects
 							(font
 								(size 1.27 1.27)
 							)
 						)
 					)
-					(number "13"
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 0 -2.54 90)
+					(length 2.54)
+					(name "V"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 2.54 -2.54 90)
+					(length 2.54)
+					(name "G"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at -2.54 17.78 270)
+					(length 2.54)
+					(name "D"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 0 17.78 270)
+					(length 2.54)
+					(name "C"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -3925,16 +3873,154 @@
 					)
 				)
 				(pin passive line
-					(at 7.62 7.62 270)
+					(at 2.54 17.78 270)
 					(length 2.54)
-					(name "~"
+					(name ""
 						(effects
 							(font
 								(size 1.27 1.27)
 							)
 						)
 					)
-					(number "14"
+					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+		)
+		(symbol "slon_modules:gps"
+			(pin_names
+				(offset 1.27)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "gps"
+				(at 6.096 14.732 0)
+				(effects
+					(font
+						(size 2.54 2.54)
+					)
+				)
+			)
+			(property "Value" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "gps_0_1"
+				(rectangle
+					(start 0 12.7)
+					(end 12.7 0)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "gps_1_1"
+				(pin power_in line
+					(at 1.27 -2.54 90)
+					(length 2.54)
+					(name "VCC"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 3.81 -2.54 90)
+					(length 2.54)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 6.35 -2.54 90)
+					(length 2.54)
+					(name "TX"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at 8.89 -2.54 90)
+					(length 2.54)
+					(name "RX"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -3943,16 +4029,118 @@
 					)
 				)
 				(pin passive line
-					(at -5.08 7.62 270)
+					(at 11.43 -2.54 90)
 					(length 2.54)
-					(name "~"
+					(name "PPS"
 						(effects
 							(font
 								(size 1.27 1.27)
 							)
 						)
 					)
-					(number "A1"
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+		)
+		(symbol "slon_modules:relay"
+			(pin_names
+				(offset 2.54)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "relay"
+				(at 0 12.446 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "relay_0_1"
+				(rectangle
+					(start -12.7 25.4)
+					(end 12.7 0)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "relay_1_1"
+				(pin input line
+					(at -3.81 -2.54 90)
+					(length 2.54)
+					(name "SIG"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 6.35 27.94 270)
+					(length 2.54)
+					(name "2COM"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "10"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -3961,16 +4149,142 @@
 					)
 				)
 				(pin passive line
-					(at -5.08 -7.62 90)
+					(at -1.27 -2.54 90)
 					(length 2.54)
-					(name "~"
+					(name "NC"
 						(effects
 							(font
 								(size 1.27 1.27)
 							)
 						)
 					)
-					(number "A2"
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 1.27 -2.54 90)
+					(length 2.54)
+					(name "VCC"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 3.81 -2.54 90)
+					(length 2.54)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at -6.35 27.94 270)
+					(length 2.54)
+					(name "1COM"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_out line
+					(at -3.81 27.94 270)
+					(length 2.54)
+					(name "1NC"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_out line
+					(at -1.27 27.94 270)
+					(length 2.54)
+					(name "1NO"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_out line
+					(at 1.27 27.94 270)
+					(length 2.54)
+					(name "2NO"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "8"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_out line
+					(at 3.81 27.94 270)
+					(length 2.54)
+					(name "2NC"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "9"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -3999,6 +4313,28 @@
 					(size 1.27 1.27)
 				)
 				(justify left)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "21"
+		(shape input)
+		(at 140.97 35.56 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.016 1.016)
+			)
+			(justify right)
+		)
+		(uuid "03b8eb69-f852-4912-aa19-580ba9a3ced3")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 140.97 39.8831 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
 				(hide yes)
 			)
 		)
@@ -4201,6 +4537,28 @@
 			)
 		)
 	)
+	(global_label "V5"
+		(shape input)
+		(at 69.85 46.99 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.016 1.016)
+			)
+			(justify right)
+		)
+		(uuid "162672c5-b274-4e89-8208-093772e91da9")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 69.85 51.2164 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "SD0"
 		(shape input)
 		(at 234.95 107.95 180)
@@ -4373,6 +4731,28 @@
 					(size 1.27 1.27)
 				)
 				(justify left)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "16"
+		(shape input)
+		(at 184.15 40.64 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.016 1.016)
+			)
+			(justify right)
+		)
+		(uuid "2181fffa-f833-4155-99aa-a1c0446a5538")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 184.15 44.9631 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
 				(hide yes)
 			)
 		)
@@ -4663,6 +5043,28 @@
 			)
 		)
 	)
+	(global_label "22"
+		(shape input)
+		(at 152.4 35.56 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.016 1.016)
+			)
+			(justify right)
+		)
+		(uuid "327b6bf3-7e9b-4ba9-b56e-fd6363725564")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 152.4 39.8831 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "13"
 		(shape input)
 		(at 81.28 100.33 0)
@@ -4861,6 +5263,50 @@
 			)
 		)
 	)
+	(global_label "32"
+		(shape input)
+		(at 29.21 46.99 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.016 1.016)
+			)
+			(justify right)
+		)
+		(uuid "424be904-6181-4f89-8bae-6e32562711cc")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 29.21 51.3131 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "3V3"
+		(shape input)
+		(at 140.97 27.94 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.016 1.016)
+			)
+			(justify left)
+		)
+		(uuid "42917200-ccb9-4d58-b43e-0ccb4004a53d")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 140.97 22.746 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "CMD"
 		(shape input)
 		(at 81.28 107.95 0)
@@ -5011,6 +5457,50 @@
 					(size 1.27 1.27)
 				)
 				(justify left)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "3V3"
+		(shape input)
+		(at 152.4 27.94 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.016 1.016)
+			)
+			(justify left)
+		)
+		(uuid "53352995-204a-48c8-a8e0-5342f2691a91")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 152.4 22.746 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "V5"
+		(shape input)
+		(at 210.82 40.64 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.016 1.016)
+			)
+			(justify right)
+		)
+		(uuid "54161a0a-9549-43b6-a31f-cadcd2305047")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 210.82 44.8664 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
 				(hide yes)
 			)
 		)
@@ -5389,6 +5879,28 @@
 			)
 		)
 	)
+	(global_label "22"
+		(shape input)
+		(at 210.82 20.32 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.016 1.016)
+			)
+			(justify left)
+		)
+		(uuid "6a269dea-247f-45dc-a0e5-4fba0287e15c")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 210.82 15.9969 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "17"
 		(shape input)
 		(at 234.95 90.17 180)
@@ -5741,6 +6253,28 @@
 			)
 		)
 	)
+	(global_label "21"
+		(shape input)
+		(at 208.28 20.32 90)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.016 1.016)
+			)
+			(justify left)
+		)
+		(uuid "8bd02516-9b04-434b-832a-95f6b29d6645")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 208.28 15.9969 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "SD3"
 		(shape input)
 		(at 31.75 105.41 0)
@@ -5803,6 +6337,28 @@
 					(size 1.27 1.27)
 				)
 				(justify left)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape input)
+		(at 36.83 46.99 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.016 1.016)
+			)
+			(justify right)
+		)
+		(uuid "98f70328-c352-43a0-a403-34bb291011e5")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 36.83 52.4743 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
 				(hide yes)
 			)
 		)
@@ -6357,6 +6913,28 @@
 			)
 		)
 	)
+	(global_label "33"
+		(shape input)
+		(at 64.77 46.99 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.016 1.016)
+			)
+			(justify right)
+		)
+		(uuid "b1cde319-8524-4c4a-a134-355161dfb2fc")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 64.77 51.3131 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "23"
 		(shape input)
 		(at 185.42 67.31 180)
@@ -6397,6 +6975,28 @@
 					(size 1.27 1.27)
 				)
 				(justify left)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "V5"
+		(shape input)
+		(at 34.29 46.99 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.016 1.016)
+			)
+			(justify right)
+		)
+		(uuid "b6a4c3a4-b0dc-4e71-9f5b-3f59ed83b480")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 34.29 51.2164 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
 				(hide yes)
 			)
 		)
@@ -6753,6 +7353,28 @@
 			)
 		)
 	)
+	(global_label "GND"
+		(shape input)
+		(at 72.39 46.99 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.016 1.016)
+			)
+			(justify right)
+		)
+		(uuid "d3f09c51-ac5a-4fd4-8fc8-ffaa1475e091")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 72.39 52.4743 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "13"
 		(shape input)
 		(at 55.88 100.33 0)
@@ -6854,6 +7476,28 @@
 		(uuid "db40adb3-b7c7-4a38-bd64-ed9d8858ea04")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 179.9357 80.01 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "V5"
+		(shape input)
+		(at 179.07 40.64 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.016 1.016)
+			)
+			(justify right)
+		)
+		(uuid "dbecc86c-1aca-4cbb-adeb-97353b9679c2")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 179.07 44.8664 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7017,6 +7661,28 @@
 			)
 		)
 	)
+	(global_label "GND"
+		(shape input)
+		(at 213.36 40.64 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.016 1.016)
+			)
+			(justify right)
+		)
+		(uuid "e82e5239-6481-4600-a919-724813431d4b")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 213.36 46.1243 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "18"
 		(shape input)
 		(at 234.95 85.09 180)
@@ -7030,6 +7696,50 @@
 		(uuid "e8eff3a6-e954-495f-ac07-f648ab662f55")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 230.6269 85.09 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "17"
+		(shape input)
+		(at 186.69 40.64 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.016 1.016)
+			)
+			(justify right)
+		)
+		(uuid "e9801dd5-bd76-4211-8473-5210fd841ec3")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 186.69 44.9631 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "GND"
+		(shape input)
+		(at 181.61 40.64 270)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.016 1.016)
+			)
+			(justify right)
+		)
+		(uuid "eb611bf5-f9f1-4a6d-88f1-9183547f153e")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 181.61 46.1243 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7400,17 +8110,17 @@
 		)
 	)
 	(symbol
-		(lib_id "Relay:Relay_SPST-NO")
-		(at 111.76 31.75 0)
+		(lib_id "slon_modules:compass")
+		(at 210.82 38.1 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "1f4b19c1-4096-4067-b256-8552d3a1fd99")
-		(property "Reference" "K3"
-			(at 123.19 30.4799 0)
+		(uuid "246ea842-7d97-4ed4-9792-4f8f972785d6")
+		(property "Reference" "compass1"
+			(at 219.71 29.8449 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7418,8 +8128,8 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Relay_SPST-NO"
-			(at 123.19 33.0199 0)
+		(property "Value" "~"
+			(at 219.71 31.75 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7428,17 +8138,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 123.19 33.02 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 111.76 31.75 0)
+			(at 210.82 38.1 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7446,8 +8146,8 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Relay SPST, Normally Open, EN50005"
-			(at 111.76 31.75 0)
+		(property "Datasheet" ""
+			(at 210.82 38.1 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7455,39 +8155,54 @@
 				(hide yes)
 			)
 		)
-		(pin "13"
-			(uuid "2e0b6fc3-3e6c-42c9-85e3-371338e22cc3")
+		(property "Description" ""
+			(at 210.82 38.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
 		)
-		(pin "A2"
-			(uuid "4d969ac4-3b18-45d9-a846-277c1f4696d5")
+		(pin "3"
+			(uuid "fb00b5c0-6438-475e-ba09-e65603422d9b")
 		)
-		(pin "A1"
-			(uuid "589c6afb-aaf4-43f5-8625-a84667d60697")
+		(pin "1"
+			(uuid "52fb5978-cd74-4f07-98d7-2bca568b3fd3")
 		)
-		(pin "14"
-			(uuid "77a1edf9-b3bd-487e-bacc-948220d622eb")
+		(pin "5"
+			(uuid "4beef08c-d7ea-4630-ba46-4cf81ee5678d")
+		)
+		(pin "2"
+			(uuid "49579145-04a6-4c78-b90b-412e09c75f76")
+		)
+		(pin "4"
+			(uuid "4cf6b7d3-46ae-4921-8007-8b1116c24ad6")
+		)
+		(pin "6"
+			(uuid "0abf8c3f-d2db-42da-bd3a-6c88089a9036")
 		)
 		(instances
 			(project "esp32_board"
 				(path "/b6a19b8b-aca6-4876-a900-fd59845f2563"
-					(reference "K3")
+					(reference "compass1")
 					(unit 1)
 				)
 			)
 		)
 	)
 	(symbol
-		(lib_id "Mechanical:MountingHole")
-		(at 25.4 50.8 0)
+		(lib_id "slon_modules:relay")
+		(at 104.14 44.45 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "46ea5ff5-b802-4aea-b372-e7d329639281")
-		(property "Reference" "H1"
-			(at 27.94 49.5299 0)
+		(uuid "754fa3bb-df26-467d-8676-e1cbf83c95ef")
+		(property "Reference" "relay3"
+			(at 118.11 31.1149 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7495,8 +8210,8 @@
 				(justify left)
 			)
 		)
-		(property "Value" "MountingHole"
-			(at 27.94 52.0699 0)
+		(property "Value" "~"
+			(at 118.11 33.02 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7505,7 +8220,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 25.4 50.8 0)
+			(at 104.14 44.45 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7513,8 +8228,8 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
-			(at 25.4 50.8 0)
+		(property "Datasheet" ""
+			(at 104.14 44.45 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7522,36 +8237,66 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Mounting Hole without connection"
-			(at 25.4 50.8 0)
+		(property "Description" ""
+			(at 104.14 44.45 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(hide yes)
 			)
+		)
+		(pin "3"
+			(uuid "64487edf-cedb-4917-85d9-86c7e9b1a341")
+		)
+		(pin "4"
+			(uuid "bf0fe0f7-0bd1-4bc1-ad33-8cccfd945566")
+		)
+		(pin "2"
+			(uuid "6c46a7a4-1161-4ca1-bee2-6d37455b5e5a")
+		)
+		(pin "5"
+			(uuid "56c2988f-181e-45da-b292-6edc46bcf618")
+		)
+		(pin "1"
+			(uuid "b87e018a-e387-4d7f-b9c9-dfb92ae869f1")
+		)
+		(pin "9"
+			(uuid "80ac4432-c231-4056-a705-4eb2d19e5f8b")
+		)
+		(pin "10"
+			(uuid "ae540364-34f4-4f3d-b67e-d49360ab369e")
+		)
+		(pin "6"
+			(uuid "9744aa37-2f99-434e-8a21-df8453b3a9ba")
+		)
+		(pin "7"
+			(uuid "bdbe7c3e-1ff4-41ac-aea6-f39dd13abb80")
+		)
+		(pin "8"
+			(uuid "66d0a5f2-791a-4b9d-a187-61f55b98ccb8")
 		)
 		(instances
 			(project "esp32_board"
 				(path "/b6a19b8b-aca6-4876-a900-fd59845f2563"
-					(reference "H1")
+					(reference "relay3")
 					(unit 1)
 				)
 			)
 		)
 	)
 	(symbol
-		(lib_id "Mechanical:MountingHole")
-		(at 50.8 50.8 0)
+		(lib_id "slon_modules:relay")
+		(at 33.02 44.45 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "4d9f1eeb-c231-4786-83c7-2c439fdc736d")
-		(property "Reference" "H2"
-			(at 53.34 49.5299 0)
+		(uuid "7b630446-35d5-4026-8185-3c9774177cc1")
+		(property "Reference" "relay1"
+			(at 46.99 31.1149 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7559,8 +8304,8 @@
 				(justify left)
 			)
 		)
-		(property "Value" "MountingHole"
-			(at 53.34 52.0699 0)
+		(property "Value" "~"
+			(at 46.99 33.02 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7569,7 +8314,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 50.8 50.8 0)
+			(at 33.02 44.45 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7577,8 +8322,8 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
-			(at 50.8 50.8 0)
+		(property "Datasheet" ""
+			(at 33.02 44.45 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7586,19 +8331,143 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Mounting Hole without connection"
-			(at 50.8 50.8 0)
+		(property "Description" ""
+			(at 33.02 44.45 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(hide yes)
 			)
+		)
+		(pin "3"
+			(uuid "be9982f3-d440-473d-989b-3db393be680a")
+		)
+		(pin "4"
+			(uuid "7605c1c9-6533-4cc5-b0d6-63ae7eb9d471")
+		)
+		(pin "2"
+			(uuid "22012e1d-1e33-43fe-86dc-097f2503f82c")
+		)
+		(pin "5"
+			(uuid "cb3aa293-4753-4b76-9aa8-d755e90c24d4")
+		)
+		(pin "1"
+			(uuid "10655c9e-8225-4ab8-b4e8-a9a1cf0a87ff")
+		)
+		(pin "9"
+			(uuid "c218d157-592b-4051-9926-ee8b629581fa")
+		)
+		(pin "10"
+			(uuid "e6fbe913-aada-4f47-80d9-7543f633fc9c")
+		)
+		(pin "6"
+			(uuid "8ced3cdc-9843-4d5f-8bd7-4e9e21855f83")
+		)
+		(pin "7"
+			(uuid "58721172-e5b5-43f4-9b57-c2a05a50a0e8")
+		)
+		(pin "8"
+			(uuid "07b16b3d-79c7-44f0-a916-2cb186ec21ed")
 		)
 		(instances
 			(project "esp32_board"
 				(path "/b6a19b8b-aca6-4876-a900-fd59845f2563"
-					(reference "H2")
+					(reference "relay1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "slon_modules:relay")
+		(at 68.58 44.45 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "827cbc38-a32d-4611-98c1-34787f8e000b")
+		(property "Reference" "relay2"
+			(at 82.55 31.1149 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "~"
+			(at 82.55 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 68.58 44.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 68.58 44.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 68.58 44.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "3"
+			(uuid "52322940-be80-473c-b20d-98ea9ad2d784")
+		)
+		(pin "4"
+			(uuid "39acb56a-1965-4f47-aaf5-9e7351210f89")
+		)
+		(pin "2"
+			(uuid "b714b1c8-8dd3-4437-986e-00a40259c0be")
+		)
+		(pin "5"
+			(uuid "18115b45-a361-4f2f-9654-362ee8f22d9f")
+		)
+		(pin "1"
+			(uuid "676c8192-7a53-4ce6-9ebc-8678ebb25174")
+		)
+		(pin "9"
+			(uuid "10e6cabe-70c2-43e3-8424-db6080fd3547")
+		)
+		(pin "10"
+			(uuid "d1015494-8a83-4cea-b41e-ffe16adc0bda")
+		)
+		(pin "6"
+			(uuid "f3634e02-466a-4baf-9e1b-00a818fc1854")
+		)
+		(pin "7"
+			(uuid "8a2f0e52-9cf7-465b-81c5-768768a3ccb2")
+		)
+		(pin "8"
+			(uuid "66bf3c91-00e1-4022-bc7e-a9d97680fca7")
+		)
+		(instances
+			(project "esp32_board"
+				(path "/b6a19b8b-aca6-4876-a900-fd59845f2563"
+					(reference "relay2")
 					(unit 1)
 				)
 			)
@@ -7783,17 +8652,17 @@
 		)
 	)
 	(symbol
-		(lib_id "Mechanical:MountingHole")
-		(at 76.2 50.8 0)
+		(lib_id "Device:R")
+		(at 152.4 31.75 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "97593365-0a3c-4fdb-88cf-2a96b45e7b07")
-		(property "Reference" "H3"
-			(at 78.74 49.5299 0)
+		(uuid "9b14c5b5-3fd3-4632-88c1-dea9ae87ff3c")
+		(property "Reference" "R1"
+			(at 154.94 30.4799 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7801,8 +8670,8 @@
 				(justify left)
 			)
 		)
-		(property "Value" "MountingHole"
-			(at 78.74 52.0699 0)
+		(property "Value" "R"
+			(at 154.94 33.0199 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7811,7 +8680,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 76.2 50.8 0)
+			(at 150.622 31.75 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7820,7 +8689,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 76.2 50.8 0)
+			(at 152.4 31.75 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7828,19 +8697,25 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Mounting Hole without connection"
-			(at 76.2 50.8 0)
+		(property "Description" "Resistor"
+			(at 152.4 31.75 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(hide yes)
 			)
+		)
+		(pin "1"
+			(uuid "bdcec83c-b423-4da4-bbd3-5ebbf1009bef")
+		)
+		(pin "2"
+			(uuid "527ea289-c354-40cc-bba1-1c1109e23930")
 		)
 		(instances
 			(project "esp32_board"
 				(path "/b6a19b8b-aca6-4876-a900-fd59845f2563"
-					(reference "H3")
+					(reference "R1")
 					(unit 1)
 				)
 			)
@@ -7965,83 +8840,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Relay:Relay_SPST-NO")
-		(at 35.56 31.75 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "c4edc211-7a09-4060-9488-5e41f02c5086")
-		(property "Reference" "K1"
-			(at 46.99 30.4799 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "Relay_SPST-NO"
-			(at 46.99 33.0199 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" ""
-			(at 46.99 33.02 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 35.56 31.75 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Relay SPST, Normally Open, EN50005"
-			(at 35.56 31.75 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "A1"
-			(uuid "58bae14f-90b3-46a7-810c-28edc48a1990")
-		)
-		(pin "A2"
-			(uuid "1afe005f-670f-4b93-8170-40ab289cf85e")
-		)
-		(pin "13"
-			(uuid "e4c4c8f7-24f2-40ac-abab-58a2efd49b42")
-		)
-		(pin "14"
-			(uuid "7a2b87b5-be86-42d6-90a3-dd0b35e80b7a")
-		)
-		(instances
-			(project "esp32_board"
-				(path "/b6a19b8b-aca6-4876-a900-fd59845f2563"
-					(reference "K1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Connector:Conn_01x19_Socket")
 		(at 190.5 87.63 0)
 		(unit 1)
@@ -8160,17 +8958,17 @@
 		)
 	)
 	(symbol
-		(lib_id "Relay:Relay_SPST-NO")
-		(at 73.66 31.75 0)
+		(lib_id "Device:R")
+		(at 140.97 31.75 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "d3d699df-5f5a-4c3a-908a-2774f5b6329c")
-		(property "Reference" "K2"
-			(at 85.09 30.4799 0)
+		(uuid "d1086d9f-a192-4280-ab1f-43dcf996b65f")
+		(property "Reference" "R2"
+			(at 143.51 30.4799 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8178,8 +8976,8 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Relay_SPST-NO"
-			(at 85.09 33.0199 0)
+		(property "Value" "R"
+			(at 143.51 33.0199 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8188,17 +8986,16 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 85.09 33.02 0)
+			(at 139.192 31.75 90)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
 				(hide yes)
 			)
 		)
 		(property "Datasheet" "~"
-			(at 73.66 31.75 0)
+			(at 140.97 31.75 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8206,8 +9003,8 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Relay SPST, Normally Open, EN50005"
-			(at 73.66 31.75 0)
+		(property "Description" "Resistor"
+			(at 140.97 31.75 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8215,22 +9012,16 @@
 				(hide yes)
 			)
 		)
-		(pin "13"
-			(uuid "b13c5a06-2a7f-4081-9d99-aaf297be16ca")
+		(pin "1"
+			(uuid "d6e3c335-2b69-41f0-9c0d-73bd689db21e")
 		)
-		(pin "A2"
-			(uuid "69047f7f-c26e-4ede-bd79-ce65402ebd75")
-		)
-		(pin "A1"
-			(uuid "68912f15-f279-4c9d-85cd-0286efc6892a")
-		)
-		(pin "14"
-			(uuid "b8323386-b3bc-417d-ae8b-f6f6642a8f75")
+		(pin "2"
+			(uuid "7581dd81-5e4f-446b-a31e-85f0a46de8d1")
 		)
 		(instances
 			(project "esp32_board"
 				(path "/b6a19b8b-aca6-4876-a900-fd59845f2563"
-					(reference "K2")
+					(reference "R2")
 					(unit 1)
 				)
 			)
@@ -8350,6 +9141,85 @@
 			(project "esp32_board"
 				(path "/b6a19b8b-aca6-4876-a900-fd59845f2563"
 					(reference "J3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "slon_modules:gps")
+		(at 177.8 38.1 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "df52e77b-e03d-4b3f-8334-5020ae9d6275")
+		(property "Reference" "gps1"
+			(at 191.77 31.1149 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "~"
+			(at 191.77 34.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 177.8 38.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 177.8 38.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 177.8 38.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "4"
+			(uuid "4a59bc78-a8d4-4ec3-a2ea-ee59e50ee187")
+		)
+		(pin "3"
+			(uuid "9d8749e5-425d-41cb-98ed-4956932857e6")
+		)
+		(pin "1"
+			(uuid "527c1f1f-aebd-4faa-b0b3-6776d1d5cac7")
+		)
+		(pin "2"
+			(uuid "fa2e467e-3628-450e-9e49-639f2d4a9b6a")
+		)
+		(pin "5"
+			(uuid "7f996aee-d41a-492b-bcad-f26910d67dc4")
+		)
+		(instances
+			(project "esp32_board"
+				(path "/b6a19b8b-aca6-4876-a900-fd59845f2563"
+					(reference "gps1")
 					(unit 1)
 				)
 			)
