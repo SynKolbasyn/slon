@@ -8137,7 +8137,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "slon_modules:compass"
 			(at 210.82 38.1 0)
 			(effects
 				(font
@@ -8219,7 +8219,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "slon_modules:relay"
 			(at 104.14 44.45 0)
 			(effects
 				(font
@@ -8313,7 +8313,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "slon_modules:relay"
 			(at 33.02 44.45 0)
 			(effects
 				(font
@@ -8407,7 +8407,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "slon_modules:relay"
 			(at 68.58 44.45 0)
 			(effects
 				(font
@@ -9174,7 +9174,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "slon_modules:gps"
 			(at 177.8 38.1 0)
 			(effects
 				(font
