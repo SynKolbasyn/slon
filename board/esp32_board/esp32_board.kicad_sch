@@ -8131,7 +8131,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_PinSocket_2.54mm:PinSocket_1x19_P2.54mm_Vertical"
+		(property "Footprint" "slon_modules:PinHeader_1x19_P2.54mm_Vertical"
 			(at 69.85 95.25 0)
 			(effects
 				(font
@@ -8861,7 +8861,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x19_P2.54mm_Vertical"
+		(property "Footprint" "slon_modules:PinHeader_1x19_P2.54mm_Vertical"
 			(at 104.14 161.29 0)
 			(effects
 				(font
@@ -8979,7 +8979,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x19_P2.54mm_Vertical"
+		(property "Footprint" "slon_modules:PinHeader_1x19_P2.54mm_Vertical"
 			(at 54.61 161.29 0)
 			(effects
 				(font
@@ -9168,7 +9168,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x19_P2.54mm_Vertical"
+		(property "Footprint" "slon_modules:PinHeader_1x19_P2.54mm_Vertical"
 			(at 95.25 95.25 0)
 			(effects
 				(font
@@ -9366,7 +9366,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_PinSocket_2.54mm:PinSocket_1x19_P2.54mm_Vertical"
+		(property "Footprint" "slon_modules:PinHeader_1x19_P2.54mm_Vertical"
 			(at 80.01 161.29 0)
 			(effects
 				(font
@@ -9485,7 +9485,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x19_P2.54mm_Vertical"
+		(property "Footprint" "slon_modules:PinHeader_1x19_P2.54mm_Vertical"
 			(at 45.72 95.25 0)
 			(effects
 				(font
